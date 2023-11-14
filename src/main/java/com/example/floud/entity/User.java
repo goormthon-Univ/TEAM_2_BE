@@ -1,7 +1,6 @@
 package com.example.floud.entity;
 
 import com.example.floud.dto.UserFormDto;
-import com.example.floud.dto.UserRole;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +9,6 @@ import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
-import java.security.PublicKey;
 import java.time.LocalDate;
 
 @Entity
