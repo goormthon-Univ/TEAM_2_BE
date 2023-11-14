@@ -5,9 +5,9 @@ spring:
       write-dates-as-timestamps: false
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/floud?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: root
-    password: tjdwns2!
+    url: jdbc:mysql://localhost:3306/${DB_NAME}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
   jpa:
     database-platform: org.hibernate.dialect.MySQL57Dialect
     open-in-view: false
