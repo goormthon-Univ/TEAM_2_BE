@@ -1,6 +1,7 @@
 package com.example.floud.service;
 
 import com.example.floud.dto.request.CommentSaveRequestDto;
+import com.example.floud.dto.response.CommentSaveResponseDto;
 import com.example.floud.entity.Comment;
 import com.example.floud.entity.Memoir;
 import com.example.floud.entity.User;
@@ -20,8 +21,9 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public Long saveComment(CommentSaveRequestDto requestDto){
+    public CommentSaveResponseDto saveComment(CommentSaveRequestDto requestDto){
         Long user_id = requestDto.getUser_id();
+
         User user = userRepository.findById(user_id)
                 .orElseThrow(()-> new IllegalArgumentException("해당 회원 정보가 존재하지 않습니다. user_id = "+ user_id));
 
@@ -30,7 +32,13 @@ public class CommentService {
                 .orElseThrow(()-> new IllegalArgumentException("해당 게시글 정보가 존재하지 않습니다. user_id = "+ memoir_id));
 
         Comment newComment = commentRepository.save(requestDto.toEntity(user,memoir));
-        return newComment.getComment_id();
+
+        CommentSaveResponseDto responseDto = CommentSaveResponseDto.builder()
+                .comment_id(newComment.getComment_id())
+                .parent_id(newComment.getParent_id())
+                .build();
+
+        return responseDto;
     }
 
     @Transactional

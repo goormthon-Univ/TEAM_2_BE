@@ -24,7 +24,7 @@ public class CommentSaveRequestDto {
                 .content(content)
                 .parent_id(parent_id)
                 .memoir(memoir)
-                .users(user)
+                .user(user)
                 .build();
 
     }

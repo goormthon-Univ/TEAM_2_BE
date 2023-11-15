@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -22,8 +23,8 @@ public class Comment {
     @Column
     private String content;
 
-    @Column
-    private LocalDate created_at;
+    @Column(nullable = false)
+    private LocalDateTime created_at;
 
     @Column
     private Long parent_id;
@@ -31,7 +32,7 @@ public class Comment {
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User users;
+    private User user;
 
     @JsonBackReference
     @ManyToOne
