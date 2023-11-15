@@ -10,4 +10,6 @@ public interface MemoirRepository extends JpaRepository<Memoir, Long> {
 
     Optional<Memoir> findByMemoirId(Long memoirId);
     List<Memoir> findAll();
+    void deleteByMemoirId(Long memoirId);
+
 }
