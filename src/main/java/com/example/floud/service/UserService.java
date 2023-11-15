@@ -1,6 +1,7 @@
 package com.example.floud.service;
 
 import com.example.floud.dto.JwtToken;
+import com.example.floud.dto.LoginResponseDto;
 import com.example.floud.dto.UserFormDto;
 import com.example.floud.entity.User;
 import com.example.floud.repository.UserRepository;
@@ -56,7 +57,7 @@ public class UserService {
         return ResponseEntity.ok().body(user);
     }
 
-    public JwtToken login(String loginId, String rawPassword) {
+    public LoginResponseDto.Data login(String loginId, String rawPassword) {
         // 사용자 정보 조회
         User user = userRepository.findByLoginId(loginId)
                 .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
@@ -71,7 +72,7 @@ public class UserService {
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         // JWT 토큰 생성
         JwtToken token = jwtProvider.generateToken(authentication);
-        return token;
+        return new LoginResponseDto.Data(user.getId(), token.getAccessToken(),token.getRefreshToken());
     }
 
     private boolean isPhoneAlreadyRegistered(String phone) {
