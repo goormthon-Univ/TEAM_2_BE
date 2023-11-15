@@ -1,59 +1,23 @@
 package com.example.floud.entity;
 
-<<<<<<< HEAD
+import com.example.floud.entity.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.time.LocalDate;
-
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-public class Memoir {
-    @Id
-    @GeneratedValue
-    private Long memoir_id;
-
-    @Column(length = 50)
-    private String title;
-
-    @Column
-    private String memoir_keep;
-
-    @Column
-    private String memoir_prob;
-
-    @Column
-    private String memoir_try;
-
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User users;
-
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Column(nullable = false)
-    private LocalDate created_at;
-
-
-=======
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "memoirs")
+@Entity
 public class Memoir {
 
     @Id
@@ -61,6 +25,7 @@ public class Memoir {
     @Column(name = "memoir_id", unique = true, nullable = false)
     private Long id;
 
+    @JsonBackReference
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
@@ -80,9 +45,15 @@ public class Memoir {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @JsonManagedReference
+    @OneToMany(mappedBy="memoir")
+    private List<MemoirLike> memoirLikeList = new ArrayList<>();
+
+    @JsonManagedReference
+    @OneToMany(mappedBy="memoir")
+    private List<Comment> commentList = new ArrayList<>();
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
     }
->>>>>>> origin/main
 }

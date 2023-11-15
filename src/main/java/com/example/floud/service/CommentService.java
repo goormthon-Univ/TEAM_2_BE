@@ -1,7 +1,9 @@
 package com.example.floud.service;
 
 import com.example.floud.dto.request.CommentSaveRequestDto;
+import com.example.floud.dto.request.CommentUpdateRequestDto;
 import com.example.floud.dto.response.CommentSaveResponseDto;
+import com.example.floud.dto.response.CommentUpdateResponseDto;
 import com.example.floud.entity.Comment;
 import com.example.floud.entity.Memoir;
 import com.example.floud.entity.User;
@@ -41,6 +43,19 @@ public class CommentService {
         return responseDto;
     }
 
+    @Transactional
+    public CommentUpdateResponseDto updateComment(Long comment_id, CommentUpdateRequestDto requestDto){
+        Comment comment = commentRepository.findById(comment_id)
+                .orElseThrow(()-> new IllegalArgumentException("해당 댓글이 존재하지 않습니다. comment_id = "+comment_id));
+        comment.update(requestDto.getContent());
+
+        CommentUpdateResponseDto responseDto = CommentUpdateResponseDto.builder()
+                .comment_id(comment.getComment_id())
+                .content(comment.getContent())
+                .build();
+
+        return responseDto;
+    }
     @Transactional
     public void  deleteComment(Long comment_id){
         Comment comment = commentRepository.findById(comment_id)

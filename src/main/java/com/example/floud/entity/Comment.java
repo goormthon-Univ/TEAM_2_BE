@@ -40,4 +40,8 @@ public class Comment {
     private Memoir memoir;
 
 
+    public void update(String content){
+        this.content = content;
+    }
+
 }
