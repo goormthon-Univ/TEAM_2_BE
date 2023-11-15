@@ -2,6 +2,7 @@ package com.example.floud.entity;
 
 import com.example.floud.dto.UserFormDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -41,6 +44,14 @@ public class User {
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(nullable = false)
     private LocalDate birth;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "users")
+    private List<Memoir> memoirList = new ArrayList<>();
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "users")
+    private List<Comment> commentList = new ArrayList<>();
 
     @Builder
     public User(String loginId, String username, String password, String email, String phone, LocalDate birth) {
