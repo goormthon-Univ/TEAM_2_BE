@@ -36,4 +36,12 @@ public class MemoirLikeService {
                 .memori_like_id(newLike.getMemoir_like_id())
                 .build();
     }
+
+    @Transactional
+    public Long deleteLike(Long memoir_like_id){
+        MemoirLike memoirLike = memoirLikeRepository.findById(memoir_like_id)
+                .orElseThrow(()-> new IllegalArgumentException("해당 좋아요 정보가 존재하지 않습니다. memoir_like_id = "+memoir_like_id));
+        memoirLikeRepository.delete(memoirLike);
+        return memoir_like_id;
+    }
 }
