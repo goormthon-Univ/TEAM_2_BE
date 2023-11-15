@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -25,15 +26,15 @@ public class Memoir {
     @Column(length = 50, nullable = false)
     private String title;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String memoirKeep;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String memoirProblem;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String memoirTry;
 
     @Column(nullable = false, updatable = false)
-    private Date createdAt;
+    private LocalDateTime createdAt;
 }
