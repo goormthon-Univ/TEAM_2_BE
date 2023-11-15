@@ -19,6 +19,7 @@ import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -41,9 +42,11 @@ public class JwtProvider {
 
 
     public JwtToken generateToken(Authentication authentication) {
+
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
+
 
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
@@ -95,6 +98,17 @@ public class JwtProvider {
         }
         return false;
     }
+
+    public Long getUserIdFromToken(JwtToken token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token.getAccessToken()) // JWT 토큰 문자열 사용
+                .getBody();
+
+        return claims.get("userId", Long.class);
+    }
+
 
     private Claims parseClaims(String accessToken) {
         try {

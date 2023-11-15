@@ -2,10 +2,14 @@ package com.example.floud.controller;
 
 import com.example.floud.dto.JwtToken;
 import com.example.floud.dto.LoginFormDto;
+import com.example.floud.dto.LoginResponseDto;
 import com.example.floud.dto.UserFormDto;
 import com.example.floud.entity.User;
+import com.example.floud.repository.UserRepository;
 import com.example.floud.service.UserService;
+import com.example.floud.util.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +19,10 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    private UserRepository userRepository;
+
+    private JwtProvider jwtProvider;
 
     // 유저 ID로 사용자를 조회
     @GetMapping("/{id}")
@@ -38,8 +46,12 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtToken> login(@RequestBody LoginFormDto loginFormDto) {
-        JwtToken token = userService.login(loginFormDto.getLoginId(), loginFormDto.getPassword());
-        return ResponseEntity.ok(token);
+    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginFormDto loginFormDto) {
+        LoginResponseDto.Data data = userService.login(loginFormDto.getLoginId(), loginFormDto.getPassword());
+        Long userId = data.getUserId();
+        LoginResponseDto.Data responseData = new LoginResponseDto.Data(userId, data.getAccessToken(), data.getRefreshToken());
+        LoginResponseDto response = new LoginResponseDto("로그인 성공", responseData);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
