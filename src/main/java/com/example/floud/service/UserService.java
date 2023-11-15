@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,7 +29,6 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-    private AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -63,15 +61,12 @@ public class UserService {
         User user = userRepository.findByLoginId(loginId)
                 .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
 
-        System.out.println("Raw password: {}" + rawPassword);
-        System.out.println("Encoded password in DB: {}" + user.getPassword());
-        System.out.println("loginId = " + loginId);
         // 비밀번호 검증
         if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
             throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
         }
 
-        // 인증 토큰 생성 및 인증 과정 수행
+        // 토큰 생성 및 인증
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginId, rawPassword);
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         // JWT 토큰 생성
@@ -88,8 +83,4 @@ public class UserService {
         Optional<User> user = userRepository.findByEmail(email);
         return user.isPresent();
     }
-
-
-
-
 }

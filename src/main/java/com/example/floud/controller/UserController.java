@@ -5,12 +5,9 @@ import com.example.floud.dto.LoginFormDto;
 import com.example.floud.dto.UserFormDto;
 import com.example.floud.entity.User;
 import com.example.floud.service.UserService;
-import io.jsonwebtoken.Jwt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping
@@ -18,8 +15,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    private LoginFormDto loginFormDto;
 
     // 유저 ID로 사용자를 조회
     @GetMapping("/{id}")
