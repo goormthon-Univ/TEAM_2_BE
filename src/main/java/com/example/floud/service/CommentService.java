@@ -32,4 +32,12 @@ public class CommentService {
         Comment newComment = commentRepository.save(requestDto.toEntity(user,memoir));
         return newComment.getComment_id();
     }
+
+    @Transactional
+    public void  deleteComment(Long comment_id){
+        Comment comment = commentRepository.findById(comment_id)
+                        .orElseThrow(()->new IllegalArgumentException(("해당 댓글이 존재하지 않습니다. comment_id = "+comment_id)));
+        commentRepository.delete(comment);
+
+    }
 }

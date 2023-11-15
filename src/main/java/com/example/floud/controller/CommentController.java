@@ -6,10 +6,7 @@ import com.example.floud.exception.Success;
 import com.example.floud.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 @RequiredArgsConstructor
@@ -19,8 +16,13 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("")
-    public SuccessResponse<Long> saveComment(
-                                             @RequestBody CommentSaveRequestDto requestDto){
+    public SuccessResponse<Long> saveComment(@RequestBody CommentSaveRequestDto requestDto){
         return SuccessResponse.success(Success.SAVE_COMMENT_SUCCESS, commentService.saveComment(requestDto));
+    }
+
+    @DeleteMapping("/delete/{comment_id}")
+    public SuccessResponse<?> deleteComment(@PathVariable("comment_id")Long comment_id ){
+        commentService.deleteComment(comment_id);
+        return SuccessResponse.success(Success.DELETE_COMMENT_SUCCESS);
     }
 }
