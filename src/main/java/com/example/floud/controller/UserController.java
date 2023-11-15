@@ -1,5 +1,7 @@
 package com.example.floud.controller;
 
+import com.example.floud.dto.JwtToken;
+import com.example.floud.dto.LoginFormDto;
 import com.example.floud.dto.UserFormDto;
 import com.example.floud.entity.User;
 import com.example.floud.service.UserService;
@@ -26,12 +28,18 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<?> signup(
             @RequestBody UserFormDto user) {
-        try{
+        try {
             ResponseEntity<?> registeredUser = userService.signup(user);
             return ResponseEntity.ok(registeredUser);
 
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());  // 오류 응답
         }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<JwtToken> login(@RequestBody LoginFormDto loginFormDto) {
+        JwtToken token = userService.login(loginFormDto.getLoginId(), loginFormDto.getPassword());
+        return ResponseEntity.ok(token);
     }
 }

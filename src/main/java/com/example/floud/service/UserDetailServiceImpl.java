@@ -15,12 +15,14 @@ import java.util.Optional;
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 
+
+
     @Autowired
     UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
+        User user = userRepository.findByLoginId(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 
         return new org.springframework.security.core.userdetails.User(
