@@ -1,4 +1,4 @@
-package com.example.floud.dto.request;
+package com.example.floud.dto.request.user;
 
 import lombok.Builder;
 import lombok.Getter;
