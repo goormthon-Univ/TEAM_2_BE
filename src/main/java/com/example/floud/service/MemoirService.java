@@ -1,11 +1,15 @@
 package com.example.floud.service;
 
+import com.example.floud.dto.request.LikeMemoirListRequestDto;
 import com.example.floud.dto.request.MemoirCreateRequestDto;
 import com.example.floud.dto.request.MemoirUpdateRequestDto;
+import com.example.floud.dto.response.LikeMemoirListResponseDto;
 import com.example.floud.dto.response.MemoirCreateResponseDto;
 import com.example.floud.dto.response.MemoirUpdateResponseDto;
 import com.example.floud.entity.Memoir;
+import com.example.floud.entity.MemoirLike;
 import com.example.floud.entity.User;
+import com.example.floud.repository.MemoirLikeRepository;
 import com.example.floud.repository.MemoirRepository;
 import com.example.floud.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
