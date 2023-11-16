@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 public enum Success {
 
     //200 OK
+    GET_ONE_MEMOIR_SUCCESS(HttpStatus.OK, "회고를 성공적으로 조회했습니다."),
     UPDATE_MEMOIR_SUCCESS(HttpStatus.OK, "회고가 성공적으로 수정되었습니다."),
     DELETE_MEMOIR_SUCCESS(HttpStatus.NO_CONTENT, "회고가 성공적으로 삭제되었습니다."),
     UPDATE_COMMENT_SUCCESS(HttpStatus.OK, "댓글이 성공적으로 수정되었습니다."),

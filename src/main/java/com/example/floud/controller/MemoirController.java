@@ -6,6 +6,7 @@ import com.example.floud.dto.request.memoir.MemoirCreateRequestDto;
 import com.example.floud.dto.request.memoir.MemoirUpdateRequestDto;
 import com.example.floud.dto.response.like.LikeMemoirListResponseDto;
 import com.example.floud.dto.response.memoir.MemoirCreateResponseDto;
+import com.example.floud.dto.response.memoir.MemoirGetOneResponseDto;
 import com.example.floud.dto.response.memoir.MemoirUpdateResponseDto;
 import com.example.floud.exception.Success;
 import com.example.floud.service.MemoirService;
@@ -41,6 +42,11 @@ public class MemoirController {
     public SuccessResponse<?> deleteMemoir(@PathVariable Long memoir_id) {
         memoirService.deleteMemoir(memoir_id);
         return SuccessResponse.success(Success.DELETE_MEMOIR_SUCCESS);
+    }
+
+    @GetMapping("/{memoir_id}")
+    public SuccessResponse<MemoirGetOneResponseDto> getOneMemoir(@PathVariable Long memoir_id) {
+        return SuccessResponse.success(Success.GET_ONE_MEMOIR_SUCCESS, memoirService.getOneMemoir(memoir_id));
     }
 
     @GetMapping("/memoir/{user_id}")
