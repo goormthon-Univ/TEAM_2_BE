@@ -46,9 +46,6 @@ public class User {
     @Column(nullable = false)
     private LocalDate birth;
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-
     @JsonManagedReference
     @OneToMany(mappedBy = "user",  cascade = CascadeType.ALL)
     private List<Memoir> memoirList = new ArrayList<>();

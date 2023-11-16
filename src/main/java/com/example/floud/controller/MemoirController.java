@@ -29,6 +29,12 @@ public class MemoirController {
     @PatchMapping("/edit/{memoir_id}")
     public SuccessResponse<MemoirUpdateResponseDto> updateMemoir(@RequestBody MemoirUpdateRequestDto requestDto,
                                                                  @PathVariable Long memoir_id) {
-        return SuccessResponse.success(Success.UPDATE_MEMOIR_SUCCESS, memoirService.updateMemoir(memoir_id,requestDto));
+        return SuccessResponse.success(Success.UPDATE_MEMOIR_SUCCESS, memoirService.updateMemoir(memoir_id, requestDto));
+    }
+
+    @DeleteMapping("/delete/{memoir_id}")
+    public SuccessResponse<?> deleteMemoir(@PathVariable Long memoir_id) {
+        memoirService.deleteMemoir(memoir_id);
+        return SuccessResponse.success(Success.DELETE_MEMOIR_SUCCESS);
     }
 }

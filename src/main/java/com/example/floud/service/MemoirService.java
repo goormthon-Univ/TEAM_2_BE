@@ -48,7 +48,11 @@ public class MemoirService {
                 .build();
     }
 
-
-
-
+    @Transactional
+    public void deleteMemoir(Long memoirId) {
+        if (!memoirRepository.existsById(memoirId)) {
+            throw new RuntimeException("Memoir not found with id: " + memoirId);
+        }
+        memoirRepository.deleteById(memoirId);
+    }
 }
