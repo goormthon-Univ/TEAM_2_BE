@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -18,7 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "users")
+@Table(name = "user")
 public class User {
 
     @Id
@@ -46,12 +46,16 @@ public class User {
     private LocalDate birth;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "user")
     private List<Memoir> memoirList = new ArrayList<>();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "user")
     private List<Comment> commentList = new ArrayList<>();
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user")
+    private List<MemoirLike> memoirLikeList = new ArrayList<>();
 
     @Builder
     public User(String loginId, String username, String password, String email, String phone, LocalDate birth) {
@@ -63,15 +67,15 @@ public class User {
         this.birth = birth;
     }
 
-    public static User createUser(UserFormDto userFormDto, PasswordEncoder passwordEncoder) {
-        User user = User.builder()
-                .loginId(userFormDto.getLoginId())
-                .password(userFormDto.getPassword())
-                .username(userFormDto.getUsername())
-                .email(userFormDto.getEmail())
-                .phone(userFormDto.getPhone())
-                .birth(userFormDto.getBirth())
-                .build();
-        return user;
-    }
+//    public static User createUser(UserFormDto userFormDto, PasswordEncoder passwordEncoder) {
+//        User user = User.builder()
+//                .loginId(userFormDto.getLoginId())
+//                .password(userFormDto.getPassword())
+//                .username(userFormDto.getUsername())
+//                .email(userFormDto.getEmail())
+//                .phone(userFormDto.getPhone())
+//                .birth(userFormDto.getBirth())
+//                .build();
+//        return user;
+//    }
 }
