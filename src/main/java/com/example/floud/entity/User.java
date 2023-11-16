@@ -27,7 +27,7 @@ public class User {
     @Column(name = "user_id", unique = true, nullable = false)
     private Long id;
 
-    @Column(length = 50, name = "login_id", nullable = false, unique = true)
+    @Column(length = 50, name = "login_id", nullable = false)
     private String loginId;
 
     @Column(length = 10, name = "username", nullable = false)
@@ -64,14 +64,14 @@ public class User {
         this.birth = birth;
     }
 
-//    public static User createUser(SignupRequestDto signupRequestDto, PasswordEncoder passwordEncoder) {
+//    public static User createUser(UserFormDto userFormDto, PasswordEncoder passwordEncoder) {
 //        User user = User.builder()
-//                .loginId(signupRequestDto.getLoginId())
-//                .password(signupRequestDto.getPassword())
-//                .username(signupRequestDto.getUsername())
-//                .email(signupRequestDto.getEmail())
-//                .phone(signupRequestDto.getPhone())
-//                .birth(signupRequestDto.getBirth())
+//                .loginId(userFormDto.getLoginId())
+//                .password(userFormDto.getPassword())
+//                .username(userFormDto.getUsername())
+//                .email(userFormDto.getEmail())
+//                .phone(userFormDto.getPhone())
+//                .birth(userFormDto.getBirth())
 //                .build();
 //        return user;
 //    }
