@@ -4,12 +4,17 @@ package com.example.floud.controller;
 import com.example.floud.dto.SuccessResponse;
 import com.example.floud.dto.request.comment.CommentSaveRequestDto;
 import com.example.floud.dto.request.comment.CommentUpdateRequestDto;
+import com.example.floud.dto.request.comment.MyCommentListRequestDto;
 import com.example.floud.dto.response.comment.CommentSaveResponseDto;
 import com.example.floud.dto.response.comment.CommentUpdateResponseDto;
+import com.example.floud.dto.response.comment.MyCommentListResponseDto;
+
 import com.example.floud.exception.Success;
 import com.example.floud.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -36,5 +41,12 @@ public class CommentController {
     public SuccessResponse<?> deleteComment(@PathVariable("comment_id")Long comment_id ){
         commentService.deleteComment(comment_id);
         return SuccessResponse.success(Success.DELETE_COMMENT_SUCCESS);
+    }
+
+    @GetMapping("/memoir/{user_id}")
+    public List<MyCommentListResponseDto> getMyComment(
+            @PathVariable("user_id")Long user_id,
+            @RequestBody MyCommentListRequestDto requestDto){
+        return commentService.getMyComment(user_id,requestDto);
     }
 }

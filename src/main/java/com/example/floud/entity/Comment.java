@@ -26,7 +26,7 @@ public class Comment {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @Column(nullable = false)
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @Column
     private Long parent_id;
