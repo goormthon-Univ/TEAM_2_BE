@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -23,6 +24,7 @@ public class Comment {
     @Column
     private String content;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @Column(nullable = false)
     private LocalDateTime created_at;
 
