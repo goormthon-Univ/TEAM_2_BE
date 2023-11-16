@@ -1,4 +1,4 @@
-package com.example.floud.dto;
+package com.example.floud.dto.request;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import javax.validation.constraints.NotEmpty;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class LoginFormDto {
+public class LoginRequestDto {
 
     @NotBlank
     private Long userId;

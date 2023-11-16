@@ -1,9 +1,8 @@
 package com.example.floud.controller;
 
-import com.example.floud.dto.JwtToken;
-import com.example.floud.dto.LoginFormDto;
-import com.example.floud.dto.LoginResponseDto;
-import com.example.floud.dto.UserFormDto;
+import com.example.floud.dto.request.LoginRequestDto;
+import com.example.floud.dto.response.LoginResponseDto;
+import com.example.floud.dto.request.SignupRequestDto;
 import com.example.floud.entity.User;
 import com.example.floud.repository.UserRepository;
 import com.example.floud.service.UserService;
@@ -35,7 +34,7 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(
-            @RequestBody UserFormDto user) {
+            @RequestBody SignupRequestDto user) {
         try {
             ResponseEntity<?> registeredUser = userService.signup(user);
             return ResponseEntity.ok(registeredUser);
@@ -46,8 +45,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginFormDto loginFormDto) {
-        LoginResponseDto.Data data = userService.login(loginFormDto.getLoginId(), loginFormDto.getPassword());
+    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
+        LoginResponseDto.Data data = userService.login(loginRequestDto.getLoginId(), loginRequestDto.getPassword());
         Long userId = data.getUserId();
         LoginResponseDto.Data responseData = new LoginResponseDto.Data(userId, data.getAccessToken(), data.getRefreshToken());
         LoginResponseDto response = new LoginResponseDto("로그인 성공", responseData);

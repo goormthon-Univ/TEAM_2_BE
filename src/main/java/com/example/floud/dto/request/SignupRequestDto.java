@@ -1,9 +1,8 @@
-package com.example.floud.dto;
+package com.example.floud.dto.request;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -12,7 +11,7 @@ import java.time.LocalDate;
 
 @NoArgsConstructor
 @Getter
-public class UserFormDto {
+public class SignupRequestDto {
     @NotBlank(message = "아이디는 필수 입력 값입니다.")
     private String loginId;
 
@@ -33,7 +32,7 @@ public class UserFormDto {
     private LocalDate birth;
 
     @Builder
-    public UserFormDto(String loginId, String username, String email, String password, String phone, LocalDate birth) {
+    public SignupRequestDto(String loginId, String username, String email, String password, String phone, LocalDate birth) {
         this.loginId = loginId;
         this.username = username;
         this.email = email;

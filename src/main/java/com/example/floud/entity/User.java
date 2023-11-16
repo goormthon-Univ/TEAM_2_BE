@@ -1,6 +1,6 @@
 package com.example.floud.entity;
 
-import com.example.floud.dto.UserFormDto;
+import com.example.floud.dto.request.SignupRequestDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
@@ -63,14 +63,14 @@ public class User {
         this.birth = birth;
     }
 
-    public static User createUser(UserFormDto userFormDto, PasswordEncoder passwordEncoder) {
+    public static User createUser(SignupRequestDto signupRequestDto, PasswordEncoder passwordEncoder) {
         User user = User.builder()
-                .loginId(userFormDto.getLoginId())
-                .password(userFormDto.getPassword())
-                .username(userFormDto.getUsername())
-                .email(userFormDto.getEmail())
-                .phone(userFormDto.getPhone())
-                .birth(userFormDto.getBirth())
+                .loginId(signupRequestDto.getLoginId())
+                .password(signupRequestDto.getPassword())
+                .username(signupRequestDto.getUsername())
+                .email(signupRequestDto.getEmail())
+                .phone(signupRequestDto.getPhone())
+                .birth(signupRequestDto.getBirth())
                 .build();
         return user;
     }

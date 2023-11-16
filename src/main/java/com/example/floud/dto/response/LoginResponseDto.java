@@ -1,4 +1,4 @@
-package com.example.floud.dto;
+package com.example.floud.dto.response;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

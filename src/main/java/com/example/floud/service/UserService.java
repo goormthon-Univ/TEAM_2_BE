@@ -1,8 +1,8 @@
 package com.example.floud.service;
 
 import com.example.floud.dto.JwtToken;
-import com.example.floud.dto.LoginResponseDto;
-import com.example.floud.dto.UserFormDto;
+import com.example.floud.dto.response.LoginResponseDto;
+import com.example.floud.dto.request.SignupRequestDto;
 import com.example.floud.entity.User;
 import com.example.floud.repository.UserRepository;
 import com.example.floud.util.JwtProvider;
@@ -42,16 +42,16 @@ public class UserService {
         return userRepository.findById(userId);
     }
 
-    public ResponseEntity<?> signup(UserFormDto userFormDto) {
+    public ResponseEntity<?> signup(SignupRequestDto signupRequestDto) {
         User user = User.builder()
-                .loginId(userFormDto.getLoginId())
-                .password(passwordEncoder.encode(userFormDto.getPassword()))
-                .username(userFormDto.getUsername())
-                .email(userFormDto.getEmail())
-                .phone(userFormDto.getPhone())
-                .birth(userFormDto.getBirth())
+                .loginId(signupRequestDto.getLoginId())
+                .password(passwordEncoder.encode(signupRequestDto.getPassword()))
+                .username(signupRequestDto.getUsername())
+                .email(signupRequestDto.getEmail())
+                .phone(signupRequestDto.getPhone())
+                .birth(signupRequestDto.getBirth())
                 .build();
-        isPhoneAlreadyRegistered(userFormDto.getPhone());
+        isPhoneAlreadyRegistered(signupRequestDto.getPhone());
         isEmailAlreadyRegistered(user.getEmail());
         userRepository.save(user);
         return ResponseEntity.ok().body(user);
