@@ -1,6 +1,6 @@
 package com.example.floud.entity;
 
-import com.example.floud.dto.request.MemoirUpdateRequestDto;
+import com.example.floud.dto.request.memoir.MemoirUpdateRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

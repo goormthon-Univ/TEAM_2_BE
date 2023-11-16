@@ -2,14 +2,13 @@ package com.example.floud.controller;
 
 
 import com.example.floud.dto.SuccessResponse;
-import com.example.floud.dto.request.CommentSaveRequestDto;
-import com.example.floud.dto.request.CommentUpdateRequestDto;
-import com.example.floud.dto.response.CommentSaveResponseDto;
-import com.example.floud.dto.response.CommentUpdateResponseDto;
+import com.example.floud.dto.request.comment.CommentSaveRequestDto;
+import com.example.floud.dto.request.comment.CommentUpdateRequestDto;
+import com.example.floud.dto.response.comment.CommentSaveResponseDto;
+import com.example.floud.dto.response.comment.CommentUpdateResponseDto;
 import com.example.floud.exception.Success;
 import com.example.floud.service.CommentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 

@@ -1,4 +1,4 @@
-package com.example.floud.dto.request;
+package com.example.floud.dto.request.comment;
 
 import com.example.floud.entity.Comment;
 import com.example.floud.entity.Memoir;

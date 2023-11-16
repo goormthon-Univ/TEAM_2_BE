@@ -1,7 +1,7 @@
 package com.example.floud.service;
 
-import com.example.floud.dto.request.LikeSaveRequestDto;
-import com.example.floud.dto.response.LikeSaveResponseDto;
+import com.example.floud.dto.request.like.LikeSaveRequestDto;
+import com.example.floud.dto.response.like.LikeSaveResponseDto;
 import com.example.floud.entity.Memoir;
 import com.example.floud.entity.MemoirLike;
 import com.example.floud.entity.User;
