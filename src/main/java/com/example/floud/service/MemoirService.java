@@ -1,7 +1,9 @@
 package com.example.floud.service;
 
-import com.example.floud.dto.request.MemoirRequestDto;
-import com.example.floud.dto.response.MemoirResponseDto;
+import com.example.floud.dto.request.MemoirCreateRequestDto;
+import com.example.floud.dto.request.MemoirUpdateRequestDto;
+import com.example.floud.dto.response.MemoirCreateResponseDto;
+import com.example.floud.dto.response.MemoirUpdateResponseDto;
 import com.example.floud.entity.Memoir;
 import com.example.floud.entity.User;
 import com.example.floud.repository.MemoirRepository;
@@ -18,7 +20,7 @@ public class MemoirService {
     private final UserRepository userRepository;
 
     @Transactional
-    public MemoirResponseDto createMemoir(MemoirRequestDto requestDto) {
+    public MemoirCreateResponseDto createMemoir(MemoirCreateRequestDto requestDto) {
         Long user_id = requestDto.getUser_id();
 
         User user = userRepository.findById(user_id)
@@ -26,11 +28,26 @@ public class MemoirService {
 
         Memoir newMemoir = memoirRepository.save(requestDto.toMemoir(user));
 
-        MemoirResponseDto responseDto = MemoirResponseDto.builder()
+        MemoirCreateResponseDto responseDto = MemoirCreateResponseDto.builder()
                 .memoir_id(newMemoir.getId())
                 .build();
         return responseDto;
     }
+
+    @Transactional
+    public MemoirUpdateResponseDto updateMemoir(Long memoirId, MemoirUpdateRequestDto requestDto) {
+        Memoir memoir = memoirRepository.findById(memoirId)
+                .orElseThrow(() -> new RuntimeException("Memoir not found with id: " + memoirId));
+
+        memoir.updateMemoir(requestDto);
+
+        Memoir updateMemoir = memoirRepository.save(memoir);
+
+        return MemoirUpdateResponseDto.builder()
+                .memoir_id(updateMemoir.getId())
+                .build();
+    }
+
 
 
 
