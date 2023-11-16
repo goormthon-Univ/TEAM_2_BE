@@ -43,10 +43,4 @@ public class MemoirController {
         return SuccessResponse.success(Success.DELETE_MEMOIR_SUCCESS);
     }
 
-    @GetMapping("/memoir/{user_id}")
-    private SuccessResponse<List<LikeMemoirListResponseDto>> getMemoirLike(
-            @PathVariable("user_id") Long user_id,
-            @RequestBody LikeMemoirListRequestDto requestDto){
-        return SuccessResponse.success(Success.GET_MY_LIKE_MEMOIR_SUCCESS, memoirService.getMemoirLike(user_id, requestDto));
-    }
 }
