@@ -1,8 +1,8 @@
-{
-  "properties": [
-    {
-      "name": "spring.jwt",
-      "type": "java.lang.String",
-      "description": "Description for spring.jwt."
-  }
-] }
+//{
+//  "properties": [
+//    {
+//      "name": "spring.jwt",
+//      "type": "java.lang.String",
+//      "description": "Description for spring.jwt."
+//  }
+//] }

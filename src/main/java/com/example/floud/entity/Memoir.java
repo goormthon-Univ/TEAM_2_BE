@@ -1,23 +1,16 @@
 package com.example.floud.entity;
 
-import com.example.floud.entity.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-@Getter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@Getter
+@NoArgsConstructor
+@Table(name = "memoir")
 public class Memoir {
 
     @Id
@@ -25,7 +18,6 @@ public class Memoir {
     @Column(name = "memoir_id", unique = true, nullable = false)
     private Long id;
 
-    @JsonBackReference
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
@@ -45,15 +37,17 @@ public class Memoir {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy="memoir")
-    private List<MemoirLike> memoirLikeList = new ArrayList<>();
-
-    @JsonManagedReference
-    @OneToMany(mappedBy="memoir")
-    private List<Comment> commentList = new ArrayList<>();
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
+    }
+
+    @Builder
+    public Memoir(User user, String title, String memoirKeep, String memoirProblem, String memoirTry) {
+        this.user = user;
+        this.title = title;
+        this.memoirKeep = memoirKeep;
+        this.memoirProblem = memoirProblem;
+        this.memoirTry = memoirTry;
     }
 }
