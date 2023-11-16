@@ -60,7 +60,7 @@ public class MemoirService {
                     return LikeMemoirListResponseDto.builder()
                             .memoir_id(memoir.getId())
                             .title(memoir.getTitle())
-                            .created_at(memoir.getCreatedAt())
+                            .createdAt(memoir.getCreatedAt())
                             .memoir_like_id(memoirLike.getMemoir_like_id())
                             .build();
                 })
