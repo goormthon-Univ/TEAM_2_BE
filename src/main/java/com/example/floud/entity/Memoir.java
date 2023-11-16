@@ -26,6 +26,9 @@ public class Memoir {
     @Column(length = 50, nullable = false)
     private String title;
 
+    @Column(length = 50, nullable = false)
+    private String place;
+
     @Column(columnDefinition = "TEXT")
     private String memoirKeep;
 
@@ -44,9 +47,10 @@ public class Memoir {
     }
 
     @Builder
-    public Memoir(User user, String title, String memoirKeep, String memoirProblem, String memoirTry) {
+    public Memoir(User user, String title, String place, String memoirKeep, String memoirProblem, String memoirTry) {
         this.user = user;
         this.title = title;
+        this.place = place;
         this.memoirKeep = memoirKeep;
         this.memoirProblem = memoirProblem;
         this.memoirTry = memoirTry;
@@ -54,6 +58,7 @@ public class Memoir {
 
     public void updateMemoir(MemoirUpdateRequestDto requestDto) {
         this.title = requestDto.getTitle();
+        this.place = requestDto.getPlace();
         this.memoirKeep = requestDto.getMemoirKeep();
         this.memoirProblem = requestDto.getMemoirProblem();
         this.memoirTry = requestDto.getMemoirTry();
