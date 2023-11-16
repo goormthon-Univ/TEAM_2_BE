@@ -1,7 +1,7 @@
 spring:
   jwt:
     header: Authorization
-    secret: hdqkwhdwqkjlfkeqjwrklqjdklsajklejqdkjqdjhn1@!#@#!@$@!$#%#@$^$%#@!$!lkfeqwklfdn@!#@!#
+    secret: hdqkwhdwqkjlfkeqjwrklqjdklsajklejqdkjqdjhdwqjdhwqkfnkqwnskdadqwsad
     access-token-validity-in-seconds: 86400 # 24 hour
 
 
