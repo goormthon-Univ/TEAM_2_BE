@@ -35,7 +35,6 @@ public class JwtProvider {
             this.key = Keys.hmacShaKeyFor(secretByteKey);
         } catch (IllegalArgumentException e) {
             log.error("Error parsing JWT secret key", e);
-            // 적절한 예외 처리 또는 대체 로직을 구현할 수 있습니다.
         }
     }
 

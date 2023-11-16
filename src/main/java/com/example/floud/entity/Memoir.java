@@ -11,7 +11,7 @@ import java.util.Date;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "memoirs")
+@Table(name = "memoir")
 public class Memoir {
 
     @Id
