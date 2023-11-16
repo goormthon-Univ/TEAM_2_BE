@@ -11,6 +11,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +45,9 @@ public class User {
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(nullable = false)
     private LocalDate birth;
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "user",  cascade = CascadeType.ALL)
