@@ -18,7 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "users")
+@Table(name = "user")
 public class User {
 
     @Id
@@ -26,7 +26,7 @@ public class User {
     @Column(name = "user_id", unique = true, nullable = false)
     private Long id;
 
-    @Column(length = 50, name = "login_id", nullable = false)
+    @Column(length = 50, name = "login_id", nullable = false, unique = true)
     private String loginId;
 
     @Column(length = 10, name = "username", nullable = false)
@@ -46,11 +46,11 @@ public class User {
     private LocalDate birth;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "user",  cascade = CascadeType.ALL)
     private List<Memoir> memoirList = new ArrayList<>();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<>();
 
     @Builder
