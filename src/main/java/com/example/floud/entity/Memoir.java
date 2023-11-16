@@ -1,12 +1,11 @@
 package com.example.floud.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Getter
@@ -41,5 +40,14 @@ public class Memoir {
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
+    }
+
+    @Builder
+    public Memoir(User user, String title, String memoirKeep, String memoirProblem, String memoirTry) {
+        this.user = user;
+        this.title = title;
+        this.memoirKeep = memoirKeep;
+        this.memoirProblem = memoirProblem;
+        this.memoirTry = memoirTry;
     }
 }
