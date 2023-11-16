@@ -24,12 +24,11 @@ public class Comment {
     @Column
     private String content;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-
     @Column
     private Long parent_id;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
     @JsonBackReference
     @ManyToOne
@@ -41,7 +40,10 @@ public class Comment {
     @JoinColumn(name = "memoir_id")
     private Memoir memoir;
 
-
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
     public void update(String content){
         this.content = content;
     }
