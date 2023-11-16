@@ -1,32 +1,27 @@
 package com.example.floud.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class MemoirLike {
+public class Alarm {
     @Id
     @GeneratedValue
-    private Long memoir_like_id;
+    private Long alarm_id;
 
-
-    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column
-    private LocalDate likeDate;
+    private LocalDateTime alarmDate;
 
     @JsonBackReference
     @ManyToOne
@@ -38,7 +33,13 @@ public class MemoirLike {
     @JoinColumn(name = "memoir_id")
     private Memoir memoir;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "memoirLike", cascade = CascadeType.ALL)
-    private List<Alarm> alarmList = new ArrayList<>();
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "comment_id")
+    private Comment comment;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "memoir_like_id")
+    private MemoirLike memoirLike;
 }

@@ -1,12 +1,15 @@
 package com.example.floud.entity;
 
 import com.example.floud.dto.request.memoir.MemoirUpdateRequestDto;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -40,6 +43,20 @@ public class Memoir {
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "memoir", cascade = CascadeType.ALL)
+    private List<Comment> commentList = new ArrayList<>();
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "memoir", cascade = CascadeType.ALL)
+    private List<MemoirLike> memoirLikeList = new ArrayList<>();
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "memoir", cascade = CascadeType.ALL)
+    private List<Alarm> alarmList = new ArrayList<>();
+
 
     @PrePersist
     protected void onCreate() {
