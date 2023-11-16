@@ -10,5 +10,4 @@ public class CommentUpdateRequestDto {
     private String content;
 
     public CommentUpdateRequestDto(){}
-
 }

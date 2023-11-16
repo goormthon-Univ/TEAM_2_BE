@@ -1,12 +1,13 @@
 package com.example.floud.entity;
 
-import com.example.floud.dto.request.SignupRequestDto;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 //import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;

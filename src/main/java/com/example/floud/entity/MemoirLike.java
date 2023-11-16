@@ -1,35 +1,30 @@
 package com.example.floud.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Comment {
+public class MemoirLike {
     @Id
     @GeneratedValue
-    private Long comment_id;
+    private Long memoir_like_id;
 
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column
-    private String content;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @Column(nullable = false)
-    private LocalDateTime created_at;
-
-    @Column
-    private Long parent_id;
+    private LocalDate likeDate;
 
     @JsonBackReference
     @ManyToOne
@@ -40,10 +35,4 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "memoir_id")
     private Memoir memoir;
-
-
-    public void update(String content){
-        this.content = content;
-    }
-
 }
