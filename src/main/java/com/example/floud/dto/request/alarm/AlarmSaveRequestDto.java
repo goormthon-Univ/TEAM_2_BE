@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.PrePersist;
 import java.time.LocalDateTime;
 
 @Setter
