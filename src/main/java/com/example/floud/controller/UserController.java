@@ -1,12 +1,9 @@
 package com.example.floud.controller;
 
-import com.example.floud.dto.request.LoginRequestDto;
-import com.example.floud.dto.request.SignupRequestDto;
 import com.example.floud.entity.User;
 import com.example.floud.repository.UserRepository;
 import com.example.floud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

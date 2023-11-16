@@ -1,9 +1,9 @@
 package com.example.floud.service;
 
-import com.example.floud.dto.request.CommentSaveRequestDto;
-import com.example.floud.dto.request.CommentUpdateRequestDto;
-import com.example.floud.dto.response.CommentSaveResponseDto;
-import com.example.floud.dto.response.CommentUpdateResponseDto;
+import com.example.floud.dto.request.comment.CommentSaveRequestDto;
+import com.example.floud.dto.request.comment.CommentUpdateRequestDto;
+import com.example.floud.dto.response.comment.CommentSaveResponseDto;
+import com.example.floud.dto.response.comment.CommentUpdateResponseDto;
 import com.example.floud.entity.Comment;
 import com.example.floud.entity.Memoir;
 import com.example.floud.entity.User;

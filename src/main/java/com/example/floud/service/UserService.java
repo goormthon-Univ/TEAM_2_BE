@@ -1,13 +1,11 @@
 package com.example.floud.service;
 
 //import com.example.floud.dto.JwtToken;
-import com.example.floud.dto.request.SignupRequestDto;
 import com.example.floud.entity.User;
 import com.example.floud.repository.UserRepository;
 //import com.example.floud.util.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 //import org.springframework.security.authentication.AuthenticationManager;
 //import org.springframework.security.authentication.BadCredentialsException;
 //import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

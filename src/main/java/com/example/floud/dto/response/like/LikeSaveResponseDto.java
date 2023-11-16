@@ -1,4 +1,4 @@
-package com.example.floud.dto.response;
+package com.example.floud.dto.response.like;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.example.floud.dto.response;
+package com.example.floud.dto.response.comment;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

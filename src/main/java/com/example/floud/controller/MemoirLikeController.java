@@ -1,8 +1,8 @@
 package com.example.floud.controller;
 
 import com.example.floud.dto.SuccessResponse;
-import com.example.floud.dto.request.LikeSaveRequestDto;
-import com.example.floud.dto.response.LikeSaveResponseDto;
+import com.example.floud.dto.request.like.LikeSaveRequestDto;
+import com.example.floud.dto.response.like.LikeSaveResponseDto;
 import com.example.floud.exception.Success;
 import com.example.floud.service.MemoirLikeService;
 import lombok.RequiredArgsConstructor;

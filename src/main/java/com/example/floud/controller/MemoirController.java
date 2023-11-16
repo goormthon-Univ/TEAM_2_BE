@@ -1,10 +1,10 @@
 package com.example.floud.controller;
 
 import com.example.floud.dto.SuccessResponse;
-import com.example.floud.dto.request.MemoirCreateRequestDto;
-import com.example.floud.dto.request.MemoirUpdateRequestDto;
-import com.example.floud.dto.response.MemoirCreateResponseDto;
-import com.example.floud.dto.response.MemoirUpdateResponseDto;
+import com.example.floud.dto.request.memoir.MemoirCreateRequestDto;
+import com.example.floud.dto.request.memoir.MemoirUpdateRequestDto;
+import com.example.floud.dto.response.memoir.MemoirCreateResponseDto;
+import com.example.floud.dto.response.memoir.MemoirUpdateResponseDto;
 import com.example.floud.exception.Success;
 import com.example.floud.service.MemoirService;
 import org.springframework.beans.factory.annotation.Autowired;
