@@ -21,7 +21,7 @@ import java.util.List;
 @Entity
 public class Comment {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long comment_id;
 
     @Column
@@ -34,7 +34,7 @@ public class Comment {
     @Column
     private Long parent_id;
 
-    @JsonManagedReference
+
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
     private List<Alarm> alarmList = new ArrayList<>();
 

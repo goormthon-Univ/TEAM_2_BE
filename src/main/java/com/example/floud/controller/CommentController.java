@@ -10,6 +10,7 @@ import com.example.floud.dto.response.comment.CommentUpdateResponseDto;
 import com.example.floud.dto.response.comment.MyCommentListResponseDto;
 
 import com.example.floud.exception.Success;
+import com.example.floud.service.AlarmService;
 import com.example.floud.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -22,17 +23,18 @@ import java.util.List;
 @RequestMapping("/comment")
 public class CommentController {
     private final CommentService commentService;
+    private final AlarmService alarmService;
 
     @PostMapping("")
     public SuccessResponse<CommentSaveResponseDto> saveComment(@RequestBody CommentSaveRequestDto requestDto){
-        return SuccessResponse.success(Success.SAVE_COMMENT_SUCCESS, commentService.saveComment(requestDto));
+        CommentSaveResponseDto responseDto = commentService.saveComment(requestDto);
+        return SuccessResponse.success(Success.SAVE_COMMENT_SUCCESS, responseDto);
     }
 
     @PutMapping("/edit/{comment_id}")
     public SuccessResponse<CommentUpdateResponseDto> updateComment(
             @PathVariable("comment_id") Long comment_id,
             @RequestBody CommentUpdateRequestDto requestDto){
-
         return SuccessResponse.success(Success.UPDATE_COMMENT_SUCCESS, commentService.updateComment(comment_id, requestDto));
     }
 
