@@ -12,6 +12,6 @@ import java.time.LocalDateTime;
 public class LikeMemoirListResponseDto {
     private Long memoir_id;
     private String title;
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
     private Long memoir_like_id;
 }
