@@ -30,7 +30,7 @@ public class MemoirLikeController {
         return SuccessResponse.success(Success.DELETE_LIKE_SUCCESS,  memoirLikeService.deleteLike(memoir_like_id) );
     }
 
-    @GetMapping("/memoir/{user_id}")
+    @PostMapping("/memoir/{user_id}")
     private SuccessResponse<List<LikeMemoirListResponseDto>> getMemoirLike(
             @PathVariable("user_id") Long user_id,
             @RequestBody LikeMemoirListRequestDto requestDto){

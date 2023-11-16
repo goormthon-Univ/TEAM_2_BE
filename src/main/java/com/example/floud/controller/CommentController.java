@@ -45,7 +45,7 @@ public class CommentController {
         return SuccessResponse.success(Success.DELETE_COMMENT_SUCCESS);
     }
 
-    @GetMapping("/memoir/{user_id}")
+    @PostMapping("/memoir/{user_id}")
     public List<MyCommentListResponseDto> getMyComment(
             @PathVariable("user_id")Long user_id,
             @RequestBody MyCommentListRequestDto requestDto){
