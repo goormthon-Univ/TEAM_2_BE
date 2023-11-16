@@ -1,12 +1,13 @@
 package com.example.floud.entity;
 
-import com.example.floud.dto.UserFormDto;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 //import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
@@ -19,7 +20,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "users")
+@Table(name = "user")
 public class User {
 
     @Id
@@ -47,11 +48,11 @@ public class User {
     private LocalDate birth;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "user")
     private List<Memoir> memoirList = new ArrayList<>();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "user")
     private List<Comment> commentList = new ArrayList<>();
 
     @Builder
@@ -64,15 +65,15 @@ public class User {
         this.birth = birth;
     }
 
-    public static User createUser(UserFormDto userFormDto, PasswordEncoder passwordEncoder) {
-        User user = User.builder()
-                .loginId(userFormDto.getLoginId())
-                .password(userFormDto.getPassword())
-                .username(userFormDto.getUsername())
-                .email(userFormDto.getEmail())
-                .phone(userFormDto.getPhone())
-                .birth(userFormDto.getBirth())
-                .build();
-        return user;
-    }
+//    public static User createUser(UserFormDto userFormDto, PasswordEncoder passwordEncoder) {
+//        User user = User.builder()
+//                .loginId(userFormDto.getLoginId())
+//                .password(userFormDto.getPassword())
+//                .username(userFormDto.getUsername())
+//                .email(userFormDto.getEmail())
+//                .phone(userFormDto.getPhone())
+//                .birth(userFormDto.getBirth())
+//                .build();
+//        return user;
+//    }
 }
