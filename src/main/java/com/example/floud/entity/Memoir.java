@@ -2,6 +2,8 @@ package com.example.floud.entity;
 
 import com.example.floud.dto.request.memoir.MemoirUpdateRequestDto;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,6 +43,7 @@ public class Memoir {
     @Column(columnDefinition = "TEXT")
     private String memoirTry;
 
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 

@@ -5,6 +5,7 @@ import com.example.floud.dto.request.memoir.MemoirCreateRequestDto;
 import com.example.floud.dto.request.memoir.MemoirUpdateRequestDto;
 import com.example.floud.dto.response.like.LikeMemoirListResponseDto;
 import com.example.floud.dto.response.memoir.MemoirCreateResponseDto;
+import com.example.floud.dto.response.memoir.MemoirGetOneResponseDto;
 import com.example.floud.dto.response.memoir.MemoirUpdateResponseDto;
 import com.example.floud.entity.Memoir;
 import com.example.floud.entity.MemoirLike;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,7 +47,23 @@ public class MemoirService {
     }
 
 
+    @Transactional(readOnly = true)
+    public MemoirGetOneResponseDto getOneMemoir(Long memoir_id) {
+        Memoir oneMemoir = memoirRepository.findById(memoir_id)
+                .orElseThrow(() -> new RuntimeException("해당 회고 정보가 존재하지 않습니다. memoir_id = " + memoir_id));
 
+        return MemoirGetOneResponseDto.builder()
+                .user_id(oneMemoir.getUser().getId())
+                .title(oneMemoir.getTitle())
+                .place(oneMemoir.getPlace())
+                .memoirKeep(oneMemoir.getMemoirKeep())
+                .memoirProblem(oneMemoir.getMemoirProblem())
+                .memoirTry(oneMemoir.getMemoirTry())
+                .createdAt(LocalDateTime.parse(oneMemoir.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))))
+                .build();
+    }
+
+   
     @Transactional
     public MemoirUpdateResponseDto updateMemoir(Long memoirId, MemoirUpdateRequestDto requestDto) {
         Memoir memoir = memoirRepository.findById(memoirId)
