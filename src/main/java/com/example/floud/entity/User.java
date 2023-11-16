@@ -63,15 +63,15 @@ public class User {
         this.birth = birth;
     }
 
-    public static User createUser(SignupRequestDto signupRequestDto, PasswordEncoder passwordEncoder) {
-        User user = User.builder()
-                .loginId(signupRequestDto.getLoginId())
-                .password(signupRequestDto.getPassword())
-                .username(signupRequestDto.getUsername())
-                .email(signupRequestDto.getEmail())
-                .phone(signupRequestDto.getPhone())
-                .birth(signupRequestDto.getBirth())
-                .build();
-        return user;
-    }
+//    public static User createUser(SignupRequestDto signupRequestDto, PasswordEncoder passwordEncoder) {
+//        User user = User.builder()
+//                .loginId(signupRequestDto.getLoginId())
+//                .password(signupRequestDto.getPassword())
+//                .username(signupRequestDto.getUsername())
+//                .email(signupRequestDto.getEmail())
+//                .phone(signupRequestDto.getPhone())
+//                .birth(signupRequestDto.getBirth())
+//                .build();
+//        return user;
+//    }
 }

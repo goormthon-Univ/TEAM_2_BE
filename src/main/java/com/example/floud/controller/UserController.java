@@ -1,12 +1,10 @@
 package com.example.floud.controller;
 
 import com.example.floud.dto.request.LoginRequestDto;
-import com.example.floud.dto.response.LoginResponseDto;
 import com.example.floud.dto.request.SignupRequestDto;
 import com.example.floud.entity.User;
 import com.example.floud.repository.UserRepository;
 import com.example.floud.service.UserService;
-import com.example.floud.util.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +19,7 @@ public class UserController {
 
     private UserRepository userRepository;
 
-    private JwtProvider jwtProvider;
+//    private JwtProvider jwtProvider;
 
     // 유저 ID로 사용자를 조회
     @GetMapping("/{id}")
@@ -32,25 +30,25 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/signup")
-    public ResponseEntity<?> signup(
-            @RequestBody SignupRequestDto user) {
-        try {
-            ResponseEntity<?> registeredUser = userService.signup(user);
-            return ResponseEntity.ok(registeredUser);
+//    @PostMapping("/signup")
+//    public ResponseEntity<?> signup(
+//            @RequestBody SignupRequestDto user) {
+//        try {
+//            ResponseEntity<?> registeredUser = userService.signup(user);
+//            return ResponseEntity.ok(registeredUser);
+//
+//        } catch (Exception e) {
+//            return ResponseEntity.badRequest().body(e.getMessage());  // 오류 응답
+//        }
+//    }
 
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());  // 오류 응답
-        }
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
-        LoginResponseDto.Data data = userService.login(loginRequestDto.getLoginId(), loginRequestDto.getPassword());
-        Long userId = data.getUserId();
-        LoginResponseDto.Data responseData = new LoginResponseDto.Data(userId, data.getAccessToken(), data.getRefreshToken());
-        LoginResponseDto response = new LoginResponseDto("로그인 성공", responseData);
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
+//        LoginResponseDto.Data data = userService.login(loginRequestDto.getLoginId(), loginRequestDto.getPassword());
+//        Long userId = data.getUserId();
+//        LoginResponseDto.Data responseData = new LoginResponseDto.Data(userId, data.getAccessToken(), data.getRefreshToken());
+//        LoginResponseDto response = new LoginResponseDto("로그인 성공", responseData);
+//
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 }
