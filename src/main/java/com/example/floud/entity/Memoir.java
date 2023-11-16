@@ -1,5 +1,6 @@
 package com.example.floud.entity;
 
+import com.example.floud.dto.request.MemoirUpdateRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -49,5 +50,12 @@ public class Memoir {
         this.memoirKeep = memoirKeep;
         this.memoirProblem = memoirProblem;
         this.memoirTry = memoirTry;
+    }
+
+    public void updateMemoir(MemoirUpdateRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.memoirKeep = requestDto.getMemoirKeep();
+        this.memoirProblem = requestDto.getMemoirProblem();
+        this.memoirTry = requestDto.getMemoirTry();
     }
 }

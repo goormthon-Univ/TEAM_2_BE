@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class MemoirResponseDto {
+public class MemoirCreateResponseDto {
     private Long memoir_id;
 }

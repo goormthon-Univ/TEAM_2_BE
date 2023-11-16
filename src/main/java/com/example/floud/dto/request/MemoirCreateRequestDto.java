@@ -3,14 +3,12 @@ package com.example.floud.dto.request;
 
 import com.example.floud.entity.Memoir;
 import com.example.floud.entity.User;
-import com.example.floud.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 @AllArgsConstructor
-public class MemoirRequestDto {
+public class MemoirCreateRequestDto {
     private Long user_id;
     private String title;
     private String memoirKeep;
