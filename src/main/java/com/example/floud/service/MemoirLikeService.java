@@ -26,6 +26,8 @@ public class MemoirLikeService {
     private final MemoirRepository memoirRepository;
     private final MemoirLikeRepository memoirLikeRepository;
 
+    private final AlarmService alarmService;
+
     @Transactional
     public LikeSaveResponseDto saveLike(LikeSaveRequestDto requestDto){
 
@@ -35,7 +37,11 @@ public class MemoirLikeService {
         Memoir memoir = memoirRepository.findById(requestDto.getMemoir_id())
                 .orElseThrow(()-> new IllegalArgumentException("해당 게시글 정보가 존재하지 않습니다. user_id = "+ requestDto.getMemoir_id()));
 
+        //좋아요
         MemoirLike newLike = memoirLikeRepository.save(requestDto.toEntity(user,memoir));
+
+        //알람
+        alarmService.saveAlarmLike(user,memoir,newLike);
 
         return LikeSaveResponseDto.builder()
                 .memori_like_id(newLike.getMemoir_like_id())

@@ -28,6 +28,7 @@ public class AlarmSaveRequestDto {
 
     }
     public Alarm toEntityLike(User user, Memoir memoir, MemoirLike memoirLike){
+        alarmDate = LocalDateTime.now();
         return Alarm.builder()
                 .user(user)
                 .memoir(memoir)
