@@ -1,15 +1,18 @@
 package com.example.floud.service;
 
+import com.example.floud.dto.request.alarm.AlarmSaveRequestDto;
 import com.example.floud.dto.request.comment.CommentSaveRequestDto;
 import com.example.floud.dto.request.comment.CommentUpdateRequestDto;
 import com.example.floud.dto.request.comment.MyCommentListRequestDto;
 import com.example.floud.dto.response.comment.CommentSaveResponseDto;
 import com.example.floud.dto.response.comment.CommentUpdateResponseDto;
 import com.example.floud.dto.response.comment.MyCommentListResponseDto;
+import com.example.floud.entity.Alarm;
 import com.example.floud.entity.Comment;
 import com.example.floud.entity.Memoir;
 
 import com.example.floud.entity.User;
+import com.example.floud.repository.AlarmRepository;
 import com.example.floud.repository.CommentRepository;
 import com.example.floud.repository.MemoirRepository;
 import com.example.floud.repository.UserRepository;
@@ -29,11 +32,10 @@ public class CommentService {
     private final UserRepository userRepository;
     private final MemoirRepository memoirRepository;
     private final CommentRepository commentRepository;
-
+    private final AlarmService alarmService;
     @Transactional
     public CommentSaveResponseDto saveComment(CommentSaveRequestDto requestDto){
         Long user_id = requestDto.getUser_id();
-
         User user = userRepository.findById(user_id)
                 .orElseThrow(()-> new IllegalArgumentException("해당 회원 정보가 존재하지 않습니다. user_id = "+ user_id));
 
@@ -42,11 +44,13 @@ public class CommentService {
                 .orElseThrow(()-> new IllegalArgumentException("해당 게시글 정보가 존재하지 않습니다. user_id = "+ memoir_id));
 
         Comment newComment = commentRepository.save(requestDto.toEntity(user,memoir));
-
         CommentSaveResponseDto responseDto = CommentSaveResponseDto.builder()
                 .comment_id(newComment.getComment_id())
                 .parent_id(newComment.getParent_id())
                 .build();
+
+        //알람생성
+        alarmService.saveAlarmComment(user,memoir,newComment);
 
         return responseDto;
     }

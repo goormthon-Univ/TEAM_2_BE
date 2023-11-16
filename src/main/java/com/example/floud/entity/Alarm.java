@@ -16,8 +16,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 public class Alarm {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long alarm_id;
 
     @Column
@@ -33,7 +34,7 @@ public class Alarm {
     @JoinColumn(name = "memoir_id")
     private Memoir memoir;
 
-    @JsonBackReference
+
     @ManyToOne
     @JoinColumn(name = "comment_id")
     private Comment comment;
@@ -42,4 +43,6 @@ public class Alarm {
     @ManyToOne
     @JoinColumn(name = "memoir_like_id")
     private MemoirLike memoirLike;
+
+
 }
