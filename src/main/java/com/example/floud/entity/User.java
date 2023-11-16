@@ -55,6 +55,11 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<>();
 
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Alarm> alarmList = new ArrayList<>();
+
+
     @Builder
     public User(String loginId, String username, String password, String email, String phone, LocalDate birth) {
         this.loginId = loginId;

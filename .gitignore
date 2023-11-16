@@ -2,7 +2,11 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,macos,windows,node,zsh,visualstudiocode,eclipse,intellij,maven,gradle
 
 .env
+
+#yml
 application.yml
+
+
 ### Eclipse ###
 .metadata
 bin/

@@ -1,6 +1,7 @@
 package com.example.floud.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,6 +11,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Builder
@@ -30,6 +33,10 @@ public class Comment {
 
     @Column
     private Long parent_id;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
+    private List<Alarm> alarmList = new ArrayList<>();
 
     @JsonBackReference
     @ManyToOne
