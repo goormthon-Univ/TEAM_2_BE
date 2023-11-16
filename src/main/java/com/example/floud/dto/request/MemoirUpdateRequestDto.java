@@ -9,6 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class MemoirUpdateRequestDto {
     private String title;
+    private String place;
     private String memoirKeep;
     private String memoirProblem;
     private String memoirTry;

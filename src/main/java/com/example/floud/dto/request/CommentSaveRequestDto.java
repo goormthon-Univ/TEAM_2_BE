@@ -3,11 +3,9 @@ package com.example.floud.dto.request;
 import com.example.floud.entity.Comment;
 import com.example.floud.entity.Memoir;
 import com.example.floud.entity.User;
-import com.example.floud.service.CommentService;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 

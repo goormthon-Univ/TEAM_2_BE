@@ -1,11 +1,9 @@
 package com.example.floud.service;
 
 import com.example.floud.dto.request.LikeMemoirListRequestDto;
-import com.example.floud.dto.request.MemoirRequestDto;
-import com.example.floud.dto.response.LikeMemoirListResponseDto;
-import com.example.floud.dto.response.MemoirResponseDto;
 import com.example.floud.dto.request.MemoirCreateRequestDto;
 import com.example.floud.dto.request.MemoirUpdateRequestDto;
+import com.example.floud.dto.response.LikeMemoirListResponseDto;
 import com.example.floud.dto.response.MemoirCreateResponseDto;
 import com.example.floud.dto.response.MemoirUpdateResponseDto;
 import com.example.floud.entity.Memoir;

@@ -11,6 +11,7 @@ import lombok.Getter;
 public class MemoirCreateRequestDto {
     private Long user_id;
     private String title;
+    private String place;
     private String memoirKeep;
     private String memoirProblem;
     private String memoirTry;
@@ -18,6 +19,7 @@ public class MemoirCreateRequestDto {
     public Memoir toMemoir(User user) {
         return Memoir.builder()
                 .title(title)
+                .place(place)
                 .memoirKeep(memoirKeep)
                 .memoirProblem(memoirProblem)
                 .memoirTry(memoirTry)
