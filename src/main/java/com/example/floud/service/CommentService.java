@@ -89,11 +89,14 @@ public class CommentService {
         LocalDateTime endDate = created_at.withDayOfMonth(created_at.lengthOfMonth()).atTime(LocalTime.MAX);
 
         //사용자가 쓴 댓글 찾기
-        List<Comment> comments = commentRepository.findByUserIdAndCreatedAtBetween(user_id, startDate, endDate);
+        List<Comment> comments = commentRepository.findByUser_Id(user_id);
         List<MyCommentListResponseDto> responseDtos = null;
-        if (comments.isEmpty()) {}
-        else {
+        if (!comments.isEmpty()) {
             responseDtos = comments.stream()
+                    .filter(comment -> {
+                        LocalDateTime memoirCreatedAt = comment.getMemoir().getCreatedAt();
+                        return memoirCreatedAt.isAfter(startDate) && memoirCreatedAt.isBefore(endDate);
+                    })
                     .map(comment -> {
                         Memoir memoir = comment.getMemoir();
                         return MyCommentListResponseDto.builder()
@@ -106,7 +109,6 @@ public class CommentService {
                     })
                     .collect(Collectors.toList());
         }
-
 
         return responseDtos;
 

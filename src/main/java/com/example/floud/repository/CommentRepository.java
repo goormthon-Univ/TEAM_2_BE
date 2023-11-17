@@ -9,6 +9,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    List<Comment> findByUserIdAndCreatedAtBetween(Long userId, LocalDateTime startDate, LocalDateTime endDate);
+    List<Comment> findByUser_Id(Long userId);
 
 }

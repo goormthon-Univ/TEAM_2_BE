@@ -13,7 +13,6 @@ import java.util.Optional;
 public interface MemoirRepository extends JpaRepository<Memoir, Long> {
 
     List<Memoir> findByUserIdAndCreatedAtBetween(Long userId, LocalDateTime startDate, LocalDateTime endDate);
-    List<Memoir> findByIdIn(List<Long> memori_idxs);
 
 //    Optional<Memoir> findById(Long memoirId);
 //    List<Memoir> findAll();
