@@ -1,13 +1,12 @@
 package com.example.floud.dto.request.memoir;
 
 
-import com.example.floud.entity.Hashtag;
 import com.example.floud.entity.Memoir;
 import com.example.floud.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.List;
+
 
 @Getter
 @AllArgsConstructor

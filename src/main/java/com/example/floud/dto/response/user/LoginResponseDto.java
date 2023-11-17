@@ -1,14 +1,15 @@
-//package com.example.floud.dto.response;
-//
-//import lombok.Getter;
-//import lombok.NoArgsConstructor;
-//
-//@Getter
-//@NoArgsConstructor
-//public class LoginResponseDto {
+package com.example.floud.dto.response.user;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor
+public class LoginResponseDto {
+
 //    private String message;
 //    private Data data;
-//
+
 //    public LoginResponseDto(String message, Data data) {
 //        this.message = message;
 //        this.data = data;
@@ -28,4 +29,4 @@
 //        }
 //
 //    }
-//}
+}

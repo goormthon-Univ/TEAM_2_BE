@@ -1,6 +1,12 @@
 package com.example.floud.service;
 
 //import com.example.floud.dto.JwtToken;
+import com.example.floud.dto.request.comment.CommentSaveRequestDto;
+import com.example.floud.dto.request.user.SignupRequestDto;
+import com.example.floud.dto.response.comment.CommentSaveResponseDto;
+import com.example.floud.dto.response.user.SignupResponseDto;
+import com.example.floud.entity.Comment;
+import com.example.floud.entity.Memoir;
 import com.example.floud.entity.User;
 import com.example.floud.repository.UserRepository;
 //import com.example.floud.util.JwtProvider;
@@ -19,14 +25,20 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class UserService {
+    private final UserRepository userRepository;
+    @Transactional
+    public SignupResponseDto saveUser(SignupRequestDto requestDto){
+        User newUser = userRepository.save(requestDto.toUser());
+        System.out.println(newUser.getId());
+        return SignupResponseDto.builder()
+                .user_id(newUser.getId())
+                .build();
+    }
 
 //    @Autowired
 //    private BCryptPasswordEncoder passwordEncoder;
 
-    @Autowired
-    private UserRepository userRepository;
 //
 //    @Autowired
 //    private AuthenticationManager authenticationManager;
@@ -35,9 +47,9 @@ public class UserService {
 //    private JwtProvider jwtProvider;
 
 
-    public Optional<User> getUserById(Long userId) {
-        return userRepository.findById(userId);
-    }
+//    public Optional<User> getUserById(Long userId) {
+//        return userRepository.findById(userId);
+//    }
 
 //    public ResponseEntity<?> signup(SignupRequestDto signupRequestDto) {
 //        User user = User.builder()
@@ -72,13 +84,13 @@ public class UserService {
 //        return new LoginResponseDto.Data(user.getId(), token.getAccessToken(),token.getRefreshToken());
 //    }
 
-    private boolean isPhoneAlreadyRegistered(String phone) {
-        Optional<User> user = userRepository.findByPhone(phone);
-        return user.isPresent();
-    }
-
-    private boolean isEmailAlreadyRegistered(String email) {
-        Optional<User> user = userRepository.findByEmail(email);
-        return user.isPresent();
-    }
+//    private boolean isPhoneAlreadyRegistered(String phone) {
+//        Optional<User> user = userRepository.findByPhone(phone);
+//        return user.isPresent();
+//    }
+//
+//    private boolean isEmailAlreadyRegistered(String email) {
+//        Optional<User> user = userRepository.findByEmail(email);
+//        return user.isPresent();
+//    }
 }
