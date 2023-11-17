@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -57,6 +58,8 @@ public class AlarmService {
 
             alarmDtoList.add(alarmDto);
         }
+
+        alarmDtoList.sort(Comparator.comparing(AlarmListResponseDto::getAlarmTime).reversed());
         return alarmDtoList;
     }
 
