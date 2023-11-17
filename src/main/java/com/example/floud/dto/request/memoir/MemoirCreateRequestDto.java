@@ -1,10 +1,13 @@
 package com.example.floud.dto.request.memoir;
 
 
+import com.example.floud.entity.Hashtag;
 import com.example.floud.entity.Memoir;
 import com.example.floud.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -15,9 +18,8 @@ public class MemoirCreateRequestDto {
     private String memoirKeep;
     private String memoirProblem;
     private String memoirTry;
-    private String hashtag1;
-    private String hashtag2;
-    private String hashtag3;
+    private List<String> hashtag;
+
 
 
     public Memoir toMemoir(User user) {
@@ -30,4 +32,6 @@ public class MemoirCreateRequestDto {
                 .user(user)
                 .build();
     }
+
+
 }

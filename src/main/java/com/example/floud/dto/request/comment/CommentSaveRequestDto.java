@@ -1,6 +1,7 @@
 package com.example.floud.dto.request.comment;
 
 import com.example.floud.entity.Comment;
+import com.example.floud.entity.Hashtag;
 import com.example.floud.entity.Memoir;
 import com.example.floud.entity.User;
 import lombok.AllArgsConstructor;
@@ -30,4 +31,5 @@ public class CommentSaveRequestDto {
                 .build();
 
     }
+
 }
