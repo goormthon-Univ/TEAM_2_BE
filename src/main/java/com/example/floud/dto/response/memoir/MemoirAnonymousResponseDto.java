@@ -19,6 +19,8 @@ public class MemoirAnonymousResponseDto {
     private String memoirKeep;
     private String memoirProblem;
     private String memoirTry;
+    private int commentCount;
+    private int likeCount;
     private List<Comment> commentList;
     private LocalDateTime createdAt;
 }

@@ -1,6 +1,7 @@
 package com.example.floud.dto.response.memoir;
 
 import com.example.floud.entity.Comment;
+import com.example.floud.entity.MemoirLike;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,6 +21,9 @@ public class MemoirGetOneResponseDto {
     private String memoirProblem;
     private String memoirTry;
     private List<Comment> commentList;
+    private int commentCount;
+    private int likeCount;
+    private List<MemoirLike> memoirLikeList;
     private LocalDateTime createdAt;
 
 }

@@ -47,7 +47,6 @@ public class Memoir {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-
     @JsonManagedReference
     @OneToMany(mappedBy = "memoir", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> commentList = new ArrayList<>();
