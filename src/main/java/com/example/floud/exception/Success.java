@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 public enum Success {
 
     //200 OK
+    GET_USER_SUCCESS(HttpStatus.OK, "로그인이 성공적으로 진행되었습니다."),
     GET_MAIN_SUCCESS(HttpStatus.OK, "메인 화면 정보를 성공적으로 조회했습니다."),
     GET_ONE_MEMOIR_SUCCESS(HttpStatus.OK, "회고를 성공적으로 조회했습니다."),
     GET_ANONYMOUS_MEMOIR_SUCCESS(HttpStatus.OK, "익명 회고를 성공적으로 조회했습니다."),

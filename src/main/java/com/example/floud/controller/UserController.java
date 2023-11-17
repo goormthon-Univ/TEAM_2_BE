@@ -2,8 +2,10 @@ package com.example.floud.controller;
 
 import com.example.floud.dto.SuccessResponse;
 import com.example.floud.dto.request.comment.CommentSaveRequestDto;
+import com.example.floud.dto.request.user.LoginRequestDto;
 import com.example.floud.dto.request.user.SignupRequestDto;
 import com.example.floud.dto.response.comment.CommentSaveResponseDto;
+import com.example.floud.dto.response.user.LoginResponseDto;
 import com.example.floud.dto.response.user.SignupResponseDto;
 import com.example.floud.entity.User;
 import com.example.floud.exception.Success;
@@ -24,6 +26,12 @@ public class UserController {
     private SuccessResponse<SignupResponseDto> saveUser(@RequestBody SignupRequestDto requestDto){
         return SuccessResponse.success(Success.SAVE_USER_SUCCESS, userService.saveUser(requestDto));
     }
+
+    @PostMapping("login")
+    private SuccessResponse<LoginResponseDto> loginUser(@RequestBody LoginRequestDto requestDto){
+        return SuccessResponse.success(Success.GET_USER_SUCCESS, userService.loginUser(requestDto));
+    }
+
 
 //    private JwtProvider jwtProvider;
 
