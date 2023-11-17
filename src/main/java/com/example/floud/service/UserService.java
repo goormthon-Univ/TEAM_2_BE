@@ -65,17 +65,21 @@ public class UserService {
         LocalDateTime startOfDay = nowTime.withHour(0).withMinute(0).withSecond(0).withNano(0);
         LocalDateTime endOfDay = nowTime.withHour(23).withMinute(59).withSecond(59).withNano(999999999);
 
+        //오늘 회고 여부
         Memoir memoir = memoirRepository.findByUser_IdAndCreatedAtBetween(user_id, startOfDay, endOfDay)
                 .orElse(null);
         Long memoir_id; String title;
-        if (memoir == null) { //오늘의 회고를 작성하지 않은경우
-            memoir_id = 0L;
-            title = "";
-        } else {
-            memoir_id = memoir.getId();
-            title = memoir.getTitle();
-        }
+        if (memoir == null) { memoir_id = 0L; title = ""; }
+        else { memoir_id = memoir.getId(); title = memoir.getTitle();}
 
+        //어제 회고 여부
+        LocalDateTime startOfYesterday = nowTime.minusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime endOfYesterday = nowTime.minusDays(1).withHour(23).withMinute(59).withSecond(59).withNano(999999999);
+        Memoir yesterdayMemoir = memoirRepository.findByUser_IdAndCreatedAtBetween(user_id, startOfYesterday, endOfYesterday)
+                .orElse(null);
+        if(yesterdayMemoir==null) user.updateContinueDate(0);
+
+        //상위 3개 해시태그
         Map<String, Long> hashtags = findTopThreeHashtags(user_id,nowTime);
 
         return  MainResponseDto.builder()

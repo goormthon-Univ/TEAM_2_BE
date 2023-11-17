@@ -15,14 +15,5 @@ import org.springframework.data.domain.PageRequest;
 public interface HashtagRepository extends JpaRepository<Hashtag, Long> {
     boolean existsByMemoir_UserAndTagContentAndMemoir_CreatedAtIsAfter(User user, String tagContent, LocalDateTime date);
     Hashtag findByMemoir_UserAndTagContent(User user, String tagContent);
-//    @Query("SELECT h FROM Hashtag h WHERE h.memoir.user.id = :userId AND h.memoir.createdAt BETWEEN :startDateTime AND :endDateTime ORDER BY h.tagNum DESC")
-//    List<Hashtag> findTop3ByUserIdAndCreatedAtBetween(@Param("userId") Long userId,
-//                                                      @Param("startDateTime") LocalDateTime startDateTime,
-//                                                      @Param("endDateTime") LocalDateTime endDateTime,
-//                                                      Pageable pageable);
     List<Hashtag> findByMemoir(Memoir memoir);
-
-    @Query("SELECT h FROM Hashtag h JOIN h.memoir m WHERE m.user.id = :userId AND m.createdAt BETWEEN :startDateTime AND :endDateTime ORDER BY h.tagNum DESC")
-    Page<Hashtag> findTop3ByUserIdAndCreatedAtBetween(@Param("userId") Long userId, @Param("startDateTime") LocalDateTime startDateTime, @Param("endDateTime") LocalDateTime endDateTime, Pageable pageable);
-
 }

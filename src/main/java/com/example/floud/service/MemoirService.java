@@ -43,6 +43,13 @@ public class MemoirService {
                 .memoir_id(newMemoir.getId())
                 .build();
 
+
+        int backColor = user.getBackColor();
+        if (backColor==4) backColor=1;
+        else backColor++;
+
+        user.updateColor(backColor); user.updateContinueDate(user.getContinueDate()+1);
+
         return responseDto;
     }
 

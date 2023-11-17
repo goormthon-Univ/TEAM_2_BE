@@ -1,6 +1,7 @@
 package com.example.floud.entity;
 
 
+import com.example.floud.dto.request.memoir.MemoirUpdateRequestDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
@@ -59,6 +60,14 @@ public class User {
     @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Alarm> alarmList = new ArrayList<>();
+
+    public void updateColor(int backColor) {
+        this.backColor = backColor;
+    }
+
+    public void updateContinueDate(int continueDate){
+        this.continueDate = continueDate;
+    }
 
 
 
