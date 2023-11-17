@@ -1,10 +1,13 @@
 package com.example.floud.dto.response.memoir;
 
+import com.example.floud.entity.Comment;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Builder
@@ -16,6 +19,7 @@ public class MemoirGetOneResponseDto {
     private String memoirKeep;
     private String memoirProblem;
     private String memoirTry;
+    private List<Comment> commentList;
     private LocalDateTime createdAt;
 
 }

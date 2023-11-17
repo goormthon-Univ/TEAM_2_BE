@@ -12,6 +12,7 @@ import com.example.floud.repository.MemoirLikeRepository;
 import com.example.floud.repository.MemoirRepository;
 import com.example.floud.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,6 +50,8 @@ public class MemoirService {
         Memoir oneMemoir = memoirRepository.findById(memoir_id)
                 .orElseThrow(() -> new RuntimeException("해당 회고 정보가 존재하지 않습니다. memoir_id = " + memoir_id));
 
+        Hibernate.initialize(oneMemoir.getCommentList());
+
         return MemoirGetOneResponseDto.builder()
                 .user_id(oneMemoir.getUser().getId())
                 .title(oneMemoir.getTitle())
@@ -56,6 +59,7 @@ public class MemoirService {
                 .memoirKeep(oneMemoir.getMemoirKeep())
                 .memoirProblem(oneMemoir.getMemoirProblem())
                 .memoirTry(oneMemoir.getMemoirTry())
+                .commentList(oneMemoir.getCommentList())
                 .createdAt(LocalDateTime.parse(oneMemoir.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))))
                 .build();
     }
@@ -67,10 +71,14 @@ public class MemoirService {
             throw new RuntimeException("No memoirs available for anonymous viewing.");
         }
 
+
         Random random = new Random();
         Long randomMemoirId = memoirIds.get(random.nextInt(memoirIds.size()));
         Memoir memoir = memoirRepository.findById(randomMemoirId)
                 .orElseThrow(() -> new RuntimeException("Memoir not found with id: " + randomMemoirId));
+
+        memoir.getCommentList().forEach(comment -> Hibernate.initialize(comment.getAlarmList()));
+
 
         return MemoirAnonymousResponseDto.builder()
                 .user_id(memoir.getUser().getId())
@@ -79,6 +87,7 @@ public class MemoirService {
                 .memoirKeep(memoir.getMemoirKeep())
                 .memoirProblem(memoir.getMemoirProblem())
                 .memoirTry(memoir.getMemoirTry())
+                .commentList(memoir.getCommentList())
                 .createdAt(LocalDateTime.parse(memoir.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))))
                 .build();
     }

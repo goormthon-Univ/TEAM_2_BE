@@ -1,6 +1,7 @@
 package com.example.floud.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +23,7 @@ import java.util.List;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false)
     private Long comment_id;
 
     @Column
@@ -34,8 +36,8 @@ public class Comment {
     @Column
     private Long parent_id;
 
-
-    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
+    @JsonIgnore // 댓글 조회시 순환 참조 발생해서 임의로 씌움
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Alarm> alarmList = new ArrayList<>();
 
     @JsonBackReference

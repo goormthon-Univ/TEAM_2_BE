@@ -49,15 +49,15 @@ public class Memoir {
 
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "memoir", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "memoir", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> commentList = new ArrayList<>();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "memoir", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "memoir", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<MemoirLike> memoirLikeList = new ArrayList<>();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "memoir", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "memoir", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Alarm> alarmList = new ArrayList<>();
 
 
