@@ -1,14 +1,12 @@
 package com.example.floud.service;
 
-import com.example.floud.dto.request.like.LikeMemoirListRequestDto;
 import com.example.floud.dto.request.memoir.MemoirCreateRequestDto;
 import com.example.floud.dto.request.memoir.MemoirUpdateRequestDto;
-import com.example.floud.dto.response.like.LikeMemoirListResponseDto;
+import com.example.floud.dto.response.memoir.MemoirAnonymousResponseDto;
 import com.example.floud.dto.response.memoir.MemoirCreateResponseDto;
 import com.example.floud.dto.response.memoir.MemoirGetOneResponseDto;
 import com.example.floud.dto.response.memoir.MemoirUpdateResponseDto;
 import com.example.floud.entity.Memoir;
-import com.example.floud.entity.MemoirLike;
 import com.example.floud.entity.User;
 import com.example.floud.repository.MemoirLikeRepository;
 import com.example.floud.repository.MemoirRepository;
@@ -17,11 +15,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Random;
 
 @RequiredArgsConstructor
 @Service
@@ -63,7 +60,30 @@ public class MemoirService {
                 .build();
     }
 
-   
+    @Transactional(readOnly = true)
+    public MemoirAnonymousResponseDto getAnonymousMemoir(Long user_id) {
+        List<Long> memoirIds = memoirRepository.findAllIdsByUserIdNot(user_id);
+        if (memoirIds.isEmpty()) {
+            throw new RuntimeException("No memoirs available for anonymous viewing.");
+        }
+
+        Random random = new Random();
+        Long randomMemoirId = memoirIds.get(random.nextInt(memoirIds.size()));
+        Memoir memoir = memoirRepository.findById(randomMemoirId)
+                .orElseThrow(() -> new RuntimeException("Memoir not found with id: " + randomMemoirId));
+
+        return MemoirAnonymousResponseDto.builder()
+                .user_id(memoir.getUser().getId())
+                .title(memoir.getTitle())
+                .place(memoir.getPlace())
+                .memoirKeep(memoir.getMemoirKeep())
+                .memoirProblem(memoir.getMemoirProblem())
+                .memoirTry(memoir.getMemoirTry())
+                .createdAt(LocalDateTime.parse(memoir.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))))
+                .build();
+    }
+
+
     @Transactional
     public MemoirUpdateResponseDto updateMemoir(Long memoirId, MemoirUpdateRequestDto requestDto) {
         Memoir memoir = memoirRepository.findById(memoirId)

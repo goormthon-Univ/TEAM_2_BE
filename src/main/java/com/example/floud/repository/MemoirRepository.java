@@ -2,6 +2,8 @@ package com.example.floud.repository;
 
 import com.example.floud.entity.Memoir;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,4 +18,6 @@ public interface MemoirRepository extends JpaRepository<Memoir, Long> {
 
     void deleteById(Long memoirId);
 
+    @Query("SELECT m.id FROM Memoir m WHERE m.user.id <> :userId")
+    List<Long> findAllIdsByUserIdNot(@Param("userId") Long user_id);
 }
