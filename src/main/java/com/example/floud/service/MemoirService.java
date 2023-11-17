@@ -4,6 +4,7 @@ import com.example.floud.dto.request.memoir.MemoirCreateRequestDto;
 import com.example.floud.dto.request.memoir.MemoirUpdateRequestDto;
 import com.example.floud.dto.response.memoir.MemoirAnonymousResponseDto;
 import com.example.floud.dto.response.memoir.MemoirCreateResponseDto;
+
 import com.example.floud.dto.response.memoir.MemoirGetOneResponseDto;
 import com.example.floud.dto.response.memoir.MemoirUpdateResponseDto;
 import com.example.floud.entity.Memoir;
@@ -43,7 +44,6 @@ public class MemoirService {
                 .build();
         return responseDto;
     }
-
 
     @Transactional(readOnly = true)
     public MemoirGetOneResponseDto getOneMemoir(Long memoir_id) {

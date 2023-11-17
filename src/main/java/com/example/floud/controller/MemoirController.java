@@ -1,11 +1,9 @@
 package com.example.floud.controller;
 
 import com.example.floud.dto.SuccessResponse;
-import com.example.floud.dto.request.like.LikeMemoirListRequestDto;
 import com.example.floud.dto.request.memoir.MemoirAnonymousRequestDto;
 import com.example.floud.dto.request.memoir.MemoirCreateRequestDto;
 import com.example.floud.dto.request.memoir.MemoirUpdateRequestDto;
-import com.example.floud.dto.response.like.LikeMemoirListResponseDto;
 import com.example.floud.dto.response.memoir.MemoirAnonymousResponseDto;
 import com.example.floud.dto.response.memoir.MemoirCreateResponseDto;
 import com.example.floud.dto.response.memoir.MemoirGetOneResponseDto;
@@ -16,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 
 @RestController
@@ -45,7 +44,6 @@ public class MemoirController {
         memoirService.deleteMemoir(memoir_id);
         return SuccessResponse.success(Success.DELETE_MEMOIR_SUCCESS);
     }
-
 
     @GetMapping("/{memoir_id}")
     public SuccessResponse<MemoirGetOneResponseDto> getOneMemoir(@PathVariable Long memoir_id) {

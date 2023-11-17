@@ -1,18 +1,17 @@
 package com.example.floud.service;
 
-import com.example.floud.dto.request.alarm.AlarmSaveRequestDto;
+
 import com.example.floud.dto.request.comment.CommentSaveRequestDto;
 import com.example.floud.dto.request.comment.CommentUpdateRequestDto;
 import com.example.floud.dto.request.comment.MyCommentListRequestDto;
 import com.example.floud.dto.response.comment.CommentSaveResponseDto;
 import com.example.floud.dto.response.comment.CommentUpdateResponseDto;
 import com.example.floud.dto.response.comment.MyCommentListResponseDto;
-import com.example.floud.entity.Alarm;
 import com.example.floud.entity.Comment;
 import com.example.floud.entity.Memoir;
 
+
 import com.example.floud.entity.User;
-import com.example.floud.repository.AlarmRepository;
 import com.example.floud.repository.CommentRepository;
 import com.example.floud.repository.MemoirRepository;
 import com.example.floud.repository.UserRepository;
@@ -25,6 +24,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @RequiredArgsConstructor
 @Service
