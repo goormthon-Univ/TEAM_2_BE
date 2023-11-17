@@ -1,22 +1,33 @@
 spring:
-  jwt:
-    header: Authorization
-    secret: hdqkwhdwqkjlfkeqjwrklqjdklsajklejqdkjqdjhdwqjdhwqkfnkqwnskdadqwsad
-    access-token-validity-in-seconds: 86400 # 24 hour
-
+  #  jwt:
+  #    secret: hdqkwhdwqkjlfkeqjwrklqjdklsajklejqdkjqdjhn1@!#@#!@$@!$#%#@$^$%#@!$!lkfeqwklfdn@!#@!#
 
   jackson:
     time-zone: Asia/Seoul
     serialization:
       write-dates-as-timestamps: false
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/${DB_NAME}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
+    url: jdbc:mysql://floud.ctxvjbgbvb6a.ap-northeast-2.rds.amazonaws.com:3306/floud?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: floud
+    password: 12341234
+
   jpa:
-    database-platform: org.hibernate.dialect.MySQL57Dialect
-    open-in-view: false
+    generate-ddl: false
     show-sql: true
     hibernate:
+      dialect : org.hibernate.dialect.MySQL8Dialect
       ddl-auto: update
+      format_sql: true
+
+  autoconfigure:
+    exclude: org.springframework.cloud.aws.autoconfigure.context.ContextStackAutoConfiguration
+
+
+
+
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2
