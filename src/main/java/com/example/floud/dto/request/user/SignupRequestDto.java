@@ -1,5 +1,9 @@
 package com.example.floud.dto.request.user;
 
+import com.example.floud.entity.Memoir;
+import com.example.floud.entity.MemoirLike;
+import com.example.floud.entity.User;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,33 +15,31 @@ import java.time.LocalDate;
 
 @NoArgsConstructor
 @Getter
+@Builder
+@AllArgsConstructor
 public class SignupRequestDto {
-    @NotBlank(message = "아이디는 필수 입력 값입니다.")
-    private String loginId;
-
-    @NotBlank(message = "이름은 필수 입력 값입니다.")
+//    @NotBlank(message = "이름은 필수 입력 값입니다.")
     private String username;
 
-    @NotEmpty(message = "이메일은 필수 입력 값입니다.")
-    @Email(message = "이메일 형식으로 입력해주세요.")
-    private String email;
-
-    @NotEmpty(message = "비밀번호는 필수 입력 값입니다.")
+//    @NotEmpty(message = "비밀번호는 필수 입력 값입니다.")
     private String password;
 
-    @NotEmpty(message = "번호는 필수 입력 값입니다.")
+//    @NotEmpty(message = "이메일은 필수 입력 값입니다.")
+    private String email;
+
     private String phone;
 
-    @NotEmpty(message = "번호는 필수 입력 값입니다.")
     private LocalDate birth;
 
-    @Builder
-    public SignupRequestDto(String loginId, String username, String email, String password, String phone, LocalDate birth) {
-        this.loginId = loginId;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.phone = phone;
-        this.birth = birth;
+    public User toUser(){
+        return User.builder()
+                .username(username)
+                .email(email)
+                .password(password)
+                .phone(phone)
+                .birth(birth)
+                .backColor(1)
+                .continueDate(0)
+                .build();
     }
 }

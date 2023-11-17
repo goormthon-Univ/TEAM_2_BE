@@ -48,9 +48,6 @@ public class Memoir {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @ColumnDefault("1")
-    private Long backColor; //디폴트 1
-
     @JsonManagedReference
     @OneToMany(mappedBy = "memoir", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> commentList = new ArrayList<>();
