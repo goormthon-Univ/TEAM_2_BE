@@ -46,9 +46,9 @@ public class CommentController {
     }
 
     @PostMapping("/memoir/{user_id}")
-    public List<MyCommentListResponseDto> getMyComment(
+    public SuccessResponse<List<MyCommentListResponseDto>> getMyComment(
             @PathVariable("user_id")Long user_id,
             @RequestBody MyCommentListRequestDto requestDto){
-        return commentService.getMyComment(user_id,requestDto);
+        return SuccessResponse.success(Success.GET_MY_COMMENT_SUCCESS, commentService.getMyComment(user_id,requestDto));
     }
 }
