@@ -61,8 +61,8 @@ public class MemoirLikeService {
         User user = userRepository.findById(user_id)
                 .orElseThrow(()-> new IllegalArgumentException("해당 회원 정보가 존재하지 않습니다. user_id = "+ user_id));
 
-        LocalDate like_date =  requestDto.getLikeDate();
 
+        LocalDate like_date =  requestDto.getLikeDate().toLocalDate();
         LocalDateTime startDate = like_date.withDayOfMonth(1).atStartOfDay();
         LocalDateTime endDate = like_date.withDayOfMonth(like_date.lengthOfMonth()).atTime(23, 59, 59);
 

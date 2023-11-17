@@ -28,6 +28,7 @@ public class Hashtag {
     @ManyToOne
     @JoinColumn(name = "memoir_id")
     private Memoir memoir;
+
     public void increaseTagNum() {
         this.tagNum += 1;
     }

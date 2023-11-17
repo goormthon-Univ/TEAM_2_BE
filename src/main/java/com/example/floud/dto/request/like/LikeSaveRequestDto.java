@@ -7,13 +7,14 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
 public class LikeSaveRequestDto {
     private Long user_id;
     private Long memoir_id;
-    private LocalDate likeDate;
+    private LocalDateTime likeDate;
 
     public MemoirLike toEntity(User user, Memoir memoir){
         return MemoirLike.builder()
