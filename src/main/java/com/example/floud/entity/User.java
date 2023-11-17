@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -44,6 +45,14 @@ public class User {
     @Column(nullable = false)
     private LocalDate birth;
 
+    @Column
+    @ColumnDefault("1")
+    private int backColor;
+
+    @Column
+    @ColumnDefault("0")
+    private int continueDate;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Memoir> memoirList = new ArrayList<>();
@@ -67,15 +76,4 @@ public class User {
         this.birth = birth;
     }
 
-//    public static User createUser(UserFormDto userFormDto, PasswordEncoder passwordEncoder) {
-//        User user = User.builder()
-//                .loginId(userFormDto.getLoginId())
-//                .password(userFormDto.getPassword())
-//                .username(userFormDto.getUsername())
-//                .email(userFormDto.getEmail())
-//                .phone(userFormDto.getPhone())
-//                .birth(userFormDto.getBirth())
-//                .build();
-//        return user;
-//    }
 }
