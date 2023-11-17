@@ -1,33 +1,36 @@
 package com.example.floud.service;
 
-//import com.example.floud.dto.JwtToken;
-
 import com.example.floud.dto.request.user.LoginRequestDto;
+import com.example.floud.dto.request.user.MainRequestDto;
 import com.example.floud.dto.request.user.SignupRequestDto;
 import com.example.floud.dto.response.user.LoginResponseDto;
+import com.example.floud.dto.response.user.MainResponseDto;
 import com.example.floud.dto.response.user.SignupResponseDto;
 
+import com.example.floud.entity.Hashtag;
+import com.example.floud.entity.Memoir;
 import com.example.floud.entity.User;
+import com.example.floud.repository.HashtagRepository;
+import com.example.floud.repository.MemoirRepository;
 import com.example.floud.repository.UserRepository;
-//import com.example.floud.util.JwtProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.authentication.AuthenticationManager;
-//import org.springframework.security.authentication.BadCredentialsException;
-//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-//import org.springframework.security.core.Authentication;
-//import org.springframework.security.core.userdetails.UsernameNotFoundException;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.ArrayList;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-
-    //private BCryptPasswordEncoder passwordEncoder;
+    private final MemoirRepository memoirRepository;
+    private final HashtagRepository hashtagRepository;
 
     @Transactional
     public SignupResponseDto saveUser(SignupRequestDto requestDto){
@@ -52,61 +55,56 @@ public class UserService {
                 .build();
     }
 
-//    @Autowired
-//    private BCryptPasswordEncoder passwordEncoder;
 
-//
-//    @Autowired
-//    private AuthenticationManager authenticationManager;
+    @Transactional
+    public MainResponseDto getMain(Long user_id, MainRequestDto requestDto){
+        User user = userRepository.findById(user_id)
+                .orElseThrow(()-> new IllegalArgumentException("사용자를 찾을 수 없습니다. user_id = " + user_id));
 
-//    @Autowired
-//    private JwtProvider jwtProvider;
+        LocalDateTime nowTime = requestDto.getNowTime();
+        LocalDateTime startOfDay = nowTime.withHour(0).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime endOfDay = nowTime.withHour(23).withMinute(59).withSecond(59).withNano(999999999);
 
+        Memoir memoir = memoirRepository.findByUser_IdAndCreatedAtBetween(user_id, startOfDay, endOfDay)
+                .orElse(null);
+        Long memoir_id; String title;
+        if (memoir == null) { //오늘의 회고를 작성하지 않은경우
+            memoir_id = 0L;
+            title = "";
+        } else {
+            memoir_id = memoir.getId();
+            title = memoir.getTitle();
+        }
 
-//    public Optional<User> getUserById(Long userId) {
-//        return userRepository.findById(userId);
-//    }
+        Map<String, Long> hashtags = findTopThreeHashtags(user_id,nowTime);
 
-//    public ResponseEntity<?> signup(SignupRequestDto signupRequestDto) {
-//        User user = User.builder()
-//                .loginId(signupRequestDto.getLoginId())
-//                .password(passwordEncoder.encode(signupRequestDto.getPassword()))
-//                .username(signupRequestDto.getUsername())
-//                .email(signupRequestDto.getEmail())
-//                .phone(signupRequestDto.getPhone())
-//                .birth(signupRequestDto.getBirth())
-//                .build();
-//        isPhoneAlreadyRegistered(signupRequestDto.getPhone());
-//        isEmailAlreadyRegistered(user.getEmail());
-//        userRepository.save(user);
-//        return ResponseEntity.ok().body(user);
-//    }
-//
-//    public LoginResponseDto.Data login(String loginId, String rawPassword) {
-//        // 사용자 정보 조회
-//        User user = userRepository.findByLoginId(loginId)
-//                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
-//
-//        // 비밀번호 검증
-//        if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
-//            throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
-//        }
-//
-//        // 토큰 생성 및 인증
-//        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginId, rawPassword);
-//        Authentication authentication = authenticationManager.authenticate(authenticationToken);
-//        // JWT 토큰 생성
-//        JwtToken token = jwtProvider.generateToken(authentication);
-//        return new LoginResponseDto.Data(user.getId(), token.getAccessToken(),token.getRefreshToken());
-//    }
+        return  MainResponseDto.builder()
+                .user_id(user_id)
+                .memoir_id(memoir_id)
+                .title(title)
+                .backColor(user.getBackColor())
+                .continueDate(user.getContinueDate())
+                .hashtagList(hashtags)
+                .build();
+    }
 
-//    private boolean isPhoneAlreadyRegistered(String phone) {
-//        Optional<User> user = userRepository.findByPhone(phone);
-//        return user.isPresent();
-//    }
-//
-//    private boolean isEmailAlreadyRegistered(String email) {
-//        Optional<User> user = userRepository.findByEmail(email);
-//        return user.isPresent();
-//    }
+    public Map<String, Long> findTopThreeHashtags(Long userId, LocalDateTime accessTime) {
+        LocalDateTime firstDayOfMonth = accessTime.withDayOfMonth(1);
+        List<Memoir> memoirs = memoirRepository.findByUserIdAndCreatedAtBetween(userId, firstDayOfMonth, accessTime);
+
+        // 찾은 회고록에 연결된 해시태그 찾기
+        List<Hashtag> hashtags = new ArrayList<>();
+        for (Memoir memoir : memoirs) {
+            hashtags.addAll(hashtagRepository.findByMemoir(memoir));
+        }
+        // tagNum 기준 내림차순
+        hashtags.sort((o1, o2) -> o2.getTagNum().compareTo(o1.getTagNum()));
+
+        // top3
+        Map<String, Long> topThreeHashtags = hashtags.stream()
+                .limit(3)
+                .collect(Collectors.toMap(Hashtag::getTagContent, Hashtag::getTagNum));
+        return topThreeHashtags;
+    }
+
 }
