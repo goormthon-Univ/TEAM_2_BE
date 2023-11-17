@@ -1,14 +1,12 @@
 package com.example.floud.service;
 
 //import com.example.floud.dto.JwtToken;
-import com.example.floud.dto.request.comment.CommentSaveRequestDto;
+
 import com.example.floud.dto.request.user.LoginRequestDto;
 import com.example.floud.dto.request.user.SignupRequestDto;
-import com.example.floud.dto.response.comment.CommentSaveResponseDto;
 import com.example.floud.dto.response.user.LoginResponseDto;
 import com.example.floud.dto.response.user.SignupResponseDto;
-import com.example.floud.entity.Comment;
-import com.example.floud.entity.Memoir;
+
 import com.example.floud.entity.User;
 import com.example.floud.repository.UserRepository;
 //import com.example.floud.util.JwtProvider;
@@ -23,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

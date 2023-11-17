@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,21 +62,24 @@ public class MemoirLikeService {
                 .orElseThrow(()-> new IllegalArgumentException("해당 회원 정보가 존재하지 않습니다. user_id = "+ user_id));
 
         LocalDate like_date =  requestDto.getLikeDate();
-        LocalDate startDate = like_date.withDayOfMonth(1);
-        LocalDate endDate = like_date.withDayOfMonth(like_date.lengthOfMonth());
 
-        List<MemoirLike> memoirLikes = memoirLikeRepository.findByUserIdAndLikeDateBetween(user_id, startDate, endDate);
-        List<LikeMemoirListResponseDto> responseDtos = memoirLikes.stream()
-                .map(memoirLike -> {
-                    Memoir memoir = memoirLike.getMemoir();
+        LocalDateTime startDate = like_date.withDayOfMonth(1).atStartOfDay();
+        LocalDateTime endDate = like_date.withDayOfMonth(like_date.lengthOfMonth()).atTime(23, 59, 59);
+
+      // Memoir 객체를 가져오되, User가 좋아요를 누른 것
+        List<Memoir> memoirs = memoirRepository.findByUserIdAndCreatedAtBetween(user_id, startDate, endDate);
+        List<LikeMemoirListResponseDto> responseDtos = memoirs.stream()
+                .filter(memoir -> memoir.getMemoirLikeList().stream().anyMatch(like -> like.getUser().getId().equals(user_id))) // User가 좋아요를 누른 Memoir만 필터링
+                .map(memoir -> {
                     return LikeMemoirListResponseDto.builder()
                             .memoir_id(memoir.getId())
                             .title(memoir.getTitle())
                             .createdAt(memoir.getCreatedAt())
-                            .memoir_like_id(memoirLike.getMemoir_like_id())
+                            .memoir_like_id(memoir.getMemoirLikeList().stream().filter(like -> like.getUser().getId().equals(user_id)).findFirst().get().getMemoir_like_id()) // User가 좋아요를 누른 MemoirLike의 ID
                             .build();
                 })
                 .collect(Collectors.toList());
+
 
         return responseDtos;
     }
