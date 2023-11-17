@@ -33,14 +33,12 @@ public class MemoirLikeService {
 
         User user = userRepository.findById(requestDto.getUser_id())
                 .orElseThrow(()-> new IllegalArgumentException("해당 회원 정보가 존재하지 않습니다. user_id = "+ requestDto.getUser_id()));
-
         Memoir memoir = memoirRepository.findById(requestDto.getMemoir_id())
                 .orElseThrow(()-> new IllegalArgumentException("해당 게시글 정보가 존재하지 않습니다. user_id = "+ requestDto.getMemoir_id()));
 
         //좋아요
         MemoirLike newLike = memoirLikeRepository.save(requestDto.toEntity(user,memoir));
-
-        //알람
+        //알람 생성
         alarmService.saveAlarmLike(user,memoir,newLike);
 
         return LikeSaveResponseDto.builder()
