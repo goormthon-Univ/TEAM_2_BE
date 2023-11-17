@@ -15,6 +15,10 @@ public class MemoirCreateRequestDto {
     private String memoirKeep;
     private String memoirProblem;
     private String memoirTry;
+    private String hashtag1;
+    private String hashtag2;
+    private String hashtag3;
+
 
     public Memoir toMemoir(User user) {
         return Memoir.builder()

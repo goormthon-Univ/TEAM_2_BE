@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -47,6 +48,9 @@ public class Memoir {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @ColumnDefault("1")
+    private Long backColor; //디폴트 1
+
     @JsonManagedReference
     @OneToMany(mappedBy = "memoir", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> commentList = new ArrayList<>();
@@ -58,6 +62,10 @@ public class Memoir {
     @JsonManagedReference
     @OneToMany(mappedBy = "memoir", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Alarm> alarmList = new ArrayList<>();
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "memoir", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Hashtag> hashtagList = new ArrayList<>();
 
 
     @PrePersist
