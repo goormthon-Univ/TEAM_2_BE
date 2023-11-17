@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -15,4 +17,5 @@ public class AlarmListResponseDto {
     private Long comment_id;
     private String content;
     private Long memoir_like_id;
+    private LocalDateTime alarmTime;
 }

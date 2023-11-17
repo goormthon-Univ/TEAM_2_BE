@@ -7,9 +7,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +26,9 @@ public class MemoirLike {
     private Long memoir_like_id;
 
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Column
-    private LocalDate likeDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @Column(nullable = false)
+    private LocalDateTime likeDate;
 
     @JsonBackReference
     @ManyToOne

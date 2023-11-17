@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,12 +45,14 @@ public class AlarmService {
             if (alarm.getComment() != null) {
                 alarmDto.setComment_id(alarm.getComment().getComment_id());
                 alarmDto.setContent(alarm.getComment().getContent());
+                alarmDto.setAlarmTime(alarm.getComment().getCreatedAt());
             }
 
             if (alarm.getMemoirLike() != null) {
                 alarmDto.setMemoir_like_id(alarm.getMemoirLike().getMemoir_like_id());
                 alarmDto.setMemoir_id(alarm.getMemoirLike().getMemoir().getId());
                 alarmDto.setTitle(alarm.getMemoirLike().getMemoir().getTitle());
+                alarmDto.setAlarmTime(alarm.getMemoirLike().getLikeDate());
             }
 
             alarmDtoList.add(alarmDto);
