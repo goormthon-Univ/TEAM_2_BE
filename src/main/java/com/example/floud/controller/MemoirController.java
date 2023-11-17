@@ -2,9 +2,11 @@ package com.example.floud.controller;
 
 import com.example.floud.dto.SuccessResponse;
 import com.example.floud.dto.request.like.LikeMemoirListRequestDto;
+import com.example.floud.dto.request.memoir.MemoirAnonymousRequestDto;
 import com.example.floud.dto.request.memoir.MemoirCreateRequestDto;
 import com.example.floud.dto.request.memoir.MemoirUpdateRequestDto;
 import com.example.floud.dto.response.like.LikeMemoirListResponseDto;
+import com.example.floud.dto.response.memoir.MemoirAnonymousResponseDto;
 import com.example.floud.dto.response.memoir.MemoirCreateResponseDto;
 import com.example.floud.dto.response.memoir.MemoirGetOneResponseDto;
 import com.example.floud.dto.response.memoir.MemoirUpdateResponseDto;
@@ -50,4 +52,8 @@ public class MemoirController {
         return SuccessResponse.success(Success.GET_ONE_MEMOIR_SUCCESS, memoirService.getOneMemoir(memoir_id));
     }
 
+    @PostMapping("/anonymous")
+    public SuccessResponse<MemoirAnonymousResponseDto> getAnonymousMemoir(@RequestBody MemoirAnonymousRequestDto requestDto) {
+        return SuccessResponse.success(Success.GET_ANONYMOUS_MEMOIR_SUCCESS, memoirService.getAnonymousMemoir(requestDto.getUser_id()));
+    }
 }

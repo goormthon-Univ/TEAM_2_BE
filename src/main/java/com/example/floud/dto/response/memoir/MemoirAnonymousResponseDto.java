@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Builder
 @AllArgsConstructor
-public class MemoirGetOneResponseDto {
+public class MemoirAnonymousResponseDto {
     private Long user_id;
     private String title;
     private String place;
@@ -21,5 +21,4 @@ public class MemoirGetOneResponseDto {
     private String memoirTry;
     private List<Comment> commentList;
     private LocalDateTime createdAt;
-
 }
