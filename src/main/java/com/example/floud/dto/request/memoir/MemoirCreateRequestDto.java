@@ -18,9 +18,10 @@ public class MemoirCreateRequestDto {
     private String memoirKeep;
     private String memoirProblem;
     private String memoirTry;
-    private List<String> hashtag;
-
-
+    private Long backColor;
+    private String hashtag1;
+    private String hashtag2;
+    private String hashtag3;
 
     public Memoir toMemoir(User user) {
         return Memoir.builder()

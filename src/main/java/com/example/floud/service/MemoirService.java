@@ -42,6 +42,7 @@ public class MemoirService {
         MemoirCreateResponseDto responseDto = MemoirCreateResponseDto.builder()
                 .memoir_id(newMemoir.getId())
                 .build();
+
         return responseDto;
     }
 

@@ -24,13 +24,10 @@ public class HashtagService {
     private final MemoirRepository memoirRepository;
 
 
-    ///Ater
     @Transactional
     public void createHashtag(MemoirCreateRequestDto requestDto, Long memoir_id){
-        Long user_id = requestDto.getUser_id();
-        List<String> hashtagList = requestDto.getHashtag();
-
-        for(String tag : hashtagList) {
+        String[] hashtags = {requestDto.getHashtag1(), requestDto.getHashtag2(), requestDto.getHashtag3()};
+        for(String tag : hashtags) {
             if(tag != null && !tag.isEmpty()) {
                 createOrUpdateHashtag(tag, memoir_id, requestDto);
             }
