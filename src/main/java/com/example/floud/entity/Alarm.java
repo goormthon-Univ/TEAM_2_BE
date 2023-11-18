@@ -27,7 +27,7 @@ public class Alarm {
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private Users users;
 
     @JsonBackReference
     @ManyToOne

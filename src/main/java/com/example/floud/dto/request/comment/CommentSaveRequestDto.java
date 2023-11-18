@@ -1,9 +1,8 @@
 package com.example.floud.dto.request.comment;
 
 import com.example.floud.entity.Comment;
-import com.example.floud.entity.Hashtag;
 import com.example.floud.entity.Memoir;
-import com.example.floud.entity.User;
+import com.example.floud.entity.Users;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,13 +20,13 @@ public class CommentSaveRequestDto {
     private Long parent_id;
 
 
-    public Comment toEntity(User user, Memoir memoir){
+    public Comment toEntity(Users users, Memoir memoir){
         return Comment.builder()
                 .content(content)
                 .parent_id(parent_id)
                 .createdAt(createdAt)
                 .memoir(memoir)
-                .user(user)
+                .users(users)
                 .build();
 
     }

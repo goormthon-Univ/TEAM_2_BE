@@ -9,6 +9,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    List<Comment> findByUser_Id(Long userId);
+    List<Comment> findByUsers_Id(Long userId);
 
 }

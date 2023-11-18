@@ -11,7 +11,7 @@ import com.example.floud.entity.Comment;
 import com.example.floud.entity.Memoir;
 
 
-import com.example.floud.entity.User;
+import com.example.floud.entity.Users;
 import com.example.floud.repository.CommentRepository;
 import com.example.floud.repository.MemoirRepository;
 import com.example.floud.repository.UserRepository;
@@ -36,21 +36,21 @@ public class CommentService {
     @Transactional
     public CommentSaveResponseDto saveComment(CommentSaveRequestDto requestDto){
         Long user_id = requestDto.getUser_id();
-        User user = userRepository.findById(user_id)
+        Users users = userRepository.findById(user_id)
                 .orElseThrow(()-> new IllegalArgumentException("해당 회원 정보가 존재하지 않습니다. user_id = "+ user_id));
 
         Long memoir_id = requestDto.getMemoir_id();
         Memoir memoir = memoirRepository.findById(memoir_id)
                 .orElseThrow(()-> new IllegalArgumentException("해당 게시글 정보가 존재하지 않습니다. user_id = "+ memoir_id));
 
-        Comment newComment = commentRepository.save(requestDto.toEntity(user,memoir));
+        Comment newComment = commentRepository.save(requestDto.toEntity(users,memoir));
         CommentSaveResponseDto responseDto = CommentSaveResponseDto.builder()
                 .comment_id(newComment.getComment_id())
                 .parent_id(newComment.getParent_id())
                 .build();
 
         //알람생성
-        alarmService.saveAlarmComment(user,memoir,newComment);
+        alarmService.saveAlarmComment(users,memoir,newComment);
 
         return responseDto;
     }
@@ -80,7 +80,7 @@ public class CommentService {
     @Transactional
     public List<MyCommentListResponseDto> getMyComment(Long user_id, MyCommentListRequestDto requestDto) {
 
-        User user = userRepository.findById(user_id)
+        Users users = userRepository.findById(user_id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원 정보가 존재하지 않습니다. user_id = " + user_id));
 
         //한달기준
@@ -89,7 +89,7 @@ public class CommentService {
         LocalDateTime endDate = created_at.withDayOfMonth(created_at.lengthOfMonth()).atTime(LocalTime.MAX);
 
         //사용자가 쓴 댓글 찾기
-        List<Comment> comments = commentRepository.findByUser_Id(user_id);
+        List<Comment> comments = commentRepository.findByUsers_Id(user_id);
         List<MyCommentListResponseDto> responseDtos = null;
         if (!comments.isEmpty()) {
             responseDtos = comments.stream()

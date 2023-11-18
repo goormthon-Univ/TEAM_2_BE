@@ -2,11 +2,10 @@ package com.example.floud.dto.request.memoir;
 
 
 import com.example.floud.entity.Memoir;
-import com.example.floud.entity.User;
+import com.example.floud.entity.Users;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -25,7 +24,7 @@ public class MemoirCreateRequestDto {
     private String hashtag2;
     private String hashtag3;
 
-    public Memoir toMemoir(User user) {
+    public Memoir toMemoir(Users users) {
         return Memoir.builder()
                 .title(title)
                 .place(place)
@@ -33,7 +32,7 @@ public class MemoirCreateRequestDto {
                 .memoirKeep(memoirKeep)
                 .memoirProblem(memoirProblem)
                 .memoirTry(memoirTry)
-                .user(user)
+                .users(users)
                 .build();
     }
 

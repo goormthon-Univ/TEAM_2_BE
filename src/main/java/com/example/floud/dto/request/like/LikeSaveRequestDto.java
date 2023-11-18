@@ -2,11 +2,10 @@ package com.example.floud.dto.request.like;
 
 import com.example.floud.entity.Memoir;
 import com.example.floud.entity.MemoirLike;
-import com.example.floud.entity.User;
+import com.example.floud.entity.Users;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -16,9 +15,9 @@ public class LikeSaveRequestDto {
     private Long memoir_id;
     private LocalDateTime likeDate;
 
-    public MemoirLike toEntity(User user, Memoir memoir){
+    public MemoirLike toEntity(Users users, Memoir memoir){
         return MemoirLike.builder()
-                .user(user)
+                .users(users)
                 .memoir(memoir)
                 .likeDate(likeDate)
                 .build();

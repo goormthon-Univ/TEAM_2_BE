@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -20,15 +19,15 @@ public class AlarmService {
     private final AlarmRepository alarmRepository;
     private final UserRepository userRepository;
     @Transactional
-    public void saveAlarmComment(User user, Memoir memoir, Comment comment){
+    public void saveAlarmComment(Users users, Memoir memoir, Comment comment){
         AlarmSaveRequestDto requestDto = new AlarmSaveRequestDto();
-        alarmRepository.save(requestDto.toEntityComment(user,memoir,comment));
+        alarmRepository.save(requestDto.toEntityComment(users,memoir,comment));
     }
 
     @Transactional
-    public void saveAlarmLike(User user, Memoir memoir, MemoirLike memoirLike){
+    public void saveAlarmLike(Users users, Memoir memoir, MemoirLike memoirLike){
         AlarmSaveRequestDto requestDto = new AlarmSaveRequestDto();
-        alarmRepository.save(requestDto.toEntityLike(user,memoir,memoirLike));
+        alarmRepository.save(requestDto.toEntityLike(users,memoir,memoirLike));
     }
 
     @Transactional
@@ -36,7 +35,7 @@ public class AlarmService {
         userRepository.findById(user_id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원 정보가 존재하지 않습니다. user_id = " + user_id));
 
-        List<Alarm> alarmList = alarmRepository.findTop30ByUserIdOrderByAlarmDateDesc(user_id);
+        List<Alarm> alarmList = alarmRepository.findTop30ByUsersIdOrderByAlarmDateDesc(user_id);
         List<AlarmListResponseDto> alarmDtoList = new ArrayList<>();
 
         for (Alarm alarm : alarmList) {

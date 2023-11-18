@@ -10,7 +10,7 @@ import com.example.floud.dto.response.user.SignupResponseDto;
 
 import com.example.floud.entity.Hashtag;
 import com.example.floud.entity.Memoir;
-import com.example.floud.entity.User;
+import com.example.floud.entity.Users;
 import com.example.floud.exception.CustomException;
 import com.example.floud.repository.HashtagRepository;
 import com.example.floud.repository.MemoirRepository;
@@ -20,7 +20,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
 
@@ -40,22 +39,22 @@ public class UserService {
         if (userRepository.findByEmail(requestDto.getEmail()).isPresent()) {
             throw new CustomException("이미 등록된 이메일입니다.", HttpStatus.BAD_REQUEST);
         }
-        User newUser = userRepository.save(requestDto.toUser());
+        Users newUsers = userRepository.save(requestDto.toUser());
 
-        System.out.println(newUser.getId());
+        System.out.println(newUsers.getId());
         return SignupResponseDto.builder()
-                .user_id(newUser.getId())
+                .user_id(newUsers.getId())
                 .build();
     }
 
     @Transactional
     public LoginResponseDto loginUser(LoginRequestDto requestDto){
-        User user = userRepository.findByEmail(requestDto.getEmail())
+        Users users = userRepository.findByEmail(requestDto.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
         Long user_id = 0L;
-        if(requestDto.getPassword().equals(user.getPassword()))
-            user_id = user.getId();
+        if(requestDto.getPassword().equals(users.getPassword()))
+            user_id = users.getId();
 
         return LoginResponseDto.builder()
                 .user_id(user_id)
@@ -65,7 +64,7 @@ public class UserService {
 
     @Transactional
     public MainResponseDto getMain(Long user_id, MainRequestDto requestDto){
-        User user = userRepository.findById(user_id)
+        Users users = userRepository.findById(user_id)
                 .orElseThrow(()-> new IllegalArgumentException("사용자를 찾을 수 없습니다. user_id = " + user_id));
 
         LocalDateTime nowTime = requestDto.getNowTime();
@@ -73,7 +72,7 @@ public class UserService {
         LocalDateTime endOfDay = nowTime.withHour(23).withMinute(59).withSecond(59).withNano(999999999);
 
         //오늘 회고 여부
-        Memoir memoir = memoirRepository.findByUser_IdAndCreatedAtBetween(user_id, startOfDay, endOfDay)
+        Memoir memoir = memoirRepository.findByUsers_IdAndCreatedAtBetween(user_id, startOfDay, endOfDay)
                 .orElse(null);
         Long memoir_id; String title;
         if (memoir == null) { memoir_id = 0L; title = ""; }
@@ -82,9 +81,9 @@ public class UserService {
         //어제 회고 여부
         LocalDateTime startOfYesterday = nowTime.minusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
         LocalDateTime endOfYesterday = nowTime.minusDays(1).withHour(23).withMinute(59).withSecond(59).withNano(999999999);
-        Memoir yesterdayMemoir = memoirRepository.findByUser_IdAndCreatedAtBetween(user_id, startOfYesterday, endOfYesterday)
+        Memoir yesterdayMemoir = memoirRepository.findByUsers_IdAndCreatedAtBetween(user_id, startOfYesterday, endOfYesterday)
                 .orElse(null);
-        if(yesterdayMemoir==null) user.updateContinueDate(0);
+        if(yesterdayMemoir==null) users.updateContinueDate(0);
 
         //상위 3개 해시태그
         List<HashtagDto> hashtags = findTopThreeHashtags(user_id,nowTime);
@@ -93,15 +92,15 @@ public class UserService {
                 .user_id(user_id)
                 .memoir_id(memoir_id)
                 .title(title)
-                .backColor(user.getBackColor())
-                .continueDate(user.getContinueDate())
+                .backColor(users.getBackColor())
+                .continueDate(users.getContinueDate())
                 .hashtagList(hashtags)
                 .build();
     }
 
     public List<HashtagDto> findTopThreeHashtags(Long userId, LocalDateTime accessTime) {
         LocalDateTime firstDayOfMonth = accessTime.withDayOfMonth(1);
-        List<Memoir> memoirs = memoirRepository.findByUserIdAndCreatedAtBetween(userId, firstDayOfMonth, accessTime);
+        List<Memoir> memoirs = memoirRepository.findByUsersIdAndCreatedAtBetween(userId, firstDayOfMonth, accessTime);
 
         // 찾은 회고록에 연결된 해시태그 찾기
         List<Hashtag> hashtags = new ArrayList<>();

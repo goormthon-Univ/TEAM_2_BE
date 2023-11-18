@@ -8,7 +8,7 @@ import com.example.floud.dto.response.memoir.MemoirCreateResponseDto;
 import com.example.floud.dto.response.memoir.MemoirGetOneResponseDto;
 import com.example.floud.dto.response.memoir.MemoirUpdateResponseDto;
 import com.example.floud.entity.Memoir;
-import com.example.floud.entity.User;
+import com.example.floud.entity.Users;
 import com.example.floud.repository.MemoirLikeRepository;
 import com.example.floud.repository.MemoirRepository;
 import com.example.floud.repository.UserRepository;
@@ -34,21 +34,21 @@ public class MemoirService {
     public MemoirCreateResponseDto createMemoir(MemoirCreateRequestDto requestDto) {
         Long user_id = requestDto.getUser_id();
 
-        User user = userRepository.findById(user_id)
+        Users users = userRepository.findById(user_id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + user_id));
 
-        Memoir newMemoir = memoirRepository.save(requestDto.toMemoir(user));
+        Memoir newMemoir = memoirRepository.save(requestDto.toMemoir(users));
 
         MemoirCreateResponseDto responseDto = MemoirCreateResponseDto.builder()
                 .memoir_id(newMemoir.getId())
                 .build();
 
 
-        int backColor = user.getBackColor();
+        int backColor = users.getBackColor();
         if (backColor==4) backColor=1;
         else backColor++;
 
-        user.updateColor(backColor); user.updateContinueDate(user.getContinueDate()+1);
+        users.updateColor(backColor); users.updateContinueDate(users.getContinueDate()+1);
 
         return responseDto;
     }
@@ -63,7 +63,7 @@ public class MemoirService {
         int likeCount = memoirLikeRepository.countByMemoirId(memoir_id); // 좋아요 개수 계산
 
         return MemoirGetOneResponseDto.builder()
-                .user_id(oneMemoir.getUser().getId())
+                .user_id(oneMemoir.getUsers().getId())
                 .title(oneMemoir.getTitle())
                 .place(oneMemoir.getPlace())
                 .memoirKeep(oneMemoir.getMemoirKeep())
@@ -78,7 +78,7 @@ public class MemoirService {
 
     @Transactional(readOnly = true)
     public MemoirAnonymousResponseDto getAnonymousMemoir(Long user_id) {
-        List<Long> memoirIds = memoirRepository.findAllIdsByUserIdNot(user_id);
+        List<Long> memoirIds = memoirRepository.findAllIdsByUsersIdNot(user_id);
         if (memoirIds.isEmpty()) {
             throw new RuntimeException("No memoirs available for anonymous viewing.");
         }
@@ -94,7 +94,7 @@ public class MemoirService {
 
 
         return MemoirAnonymousResponseDto.builder()
-                .user_id(memoir.getUser().getId())
+                .user_id(memoir.getUsers().getId())
                 .title(memoir.getTitle())
                 .place(memoir.getPlace())
                 .memoirKeep(memoir.getMemoirKeep())

@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -27,7 +26,7 @@ public class Memoir {
 
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private Users users;
 
     @Column(length = 50, nullable = false)
     private String title;
@@ -65,8 +64,8 @@ public class Memoir {
     private List<Hashtag> hashtagList = new ArrayList<>();
 
     @Builder
-    public Memoir(User user, String title, LocalDateTime createdAt, String place, String memoirKeep, String memoirProblem, String memoirTry) {
-        this.user = user;
+    public Memoir(Users users, String title, LocalDateTime createdAt, String place, String memoirKeep, String memoirProblem, String memoirTry) {
+        this.users = users;
         this.title = title;
         this.createdAt = createdAt;
         this.place = place;

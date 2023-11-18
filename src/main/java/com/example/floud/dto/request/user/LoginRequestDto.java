@@ -1,11 +1,8 @@
 package com.example.floud.dto.request.user;
 
-import com.example.floud.entity.User;
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor

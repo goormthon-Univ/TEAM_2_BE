@@ -1,16 +1,11 @@
 package com.example.floud.dto.request.user;
 
-import com.example.floud.entity.Memoir;
-import com.example.floud.entity.MemoirLike;
-import com.example.floud.entity.User;
+import com.example.floud.entity.Users;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 
 @NoArgsConstructor
@@ -31,8 +26,8 @@ public class SignupRequestDto {
 
     private LocalDate birth;
 
-    public User toUser(){
-        return User.builder()
+    public Users toUser(){
+        return Users.builder()
                 .username(username)
                 .email(email)
                 .password(password)

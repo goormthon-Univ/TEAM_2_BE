@@ -15,10 +15,10 @@ import java.time.LocalDateTime;
 public class AlarmSaveRequestDto {
     private LocalDateTime alarmDate;
 
-    public Alarm toEntityComment(User user, Memoir memoir, Comment comment){
+    public Alarm toEntityComment(Users users, Memoir memoir, Comment comment){
         alarmDate = LocalDateTime.now();
         return Alarm.builder()
-                .user(user)
+                .users(users)
                 .memoir(memoir)
                 .comment(comment)
                 .alarmDate(alarmDate)
@@ -26,10 +26,10 @@ public class AlarmSaveRequestDto {
                 .build();
 
     }
-    public Alarm toEntityLike(User user, Memoir memoir, MemoirLike memoirLike){
+    public Alarm toEntityLike(Users users, Memoir memoir, MemoirLike memoirLike){
         alarmDate = LocalDateTime.now();
         return Alarm.builder()
-                .user(user)
+                .users(users)
                 .memoir(memoir)
                 .comment(null)
                 .alarmDate(alarmDate)
