@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 
 @RestController
@@ -50,7 +52,7 @@ public class MemoirController {
     }
 
     @GetMapping("/anonymous/{user_id}")
-    public SuccessResponse<MemoirAnonymousResponseDto> getAnonymousMemoir(@PathVariable("user_id") Long user_id) {
+    public SuccessResponse <List<MemoirAnonymousResponseDto>> getAnonymousMemoir(@PathVariable("user_id") Long user_id) {
         return SuccessResponse.success(Success.GET_ANONYMOUS_MEMOIR_SUCCESS, memoirService.getAnonymousMemoir(user_id));
     }
 }

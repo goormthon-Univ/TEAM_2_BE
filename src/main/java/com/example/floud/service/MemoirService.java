@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -77,34 +78,41 @@ public class MemoirService {
     }
 
     @Transactional(readOnly = true)
-    public MemoirAnonymousResponseDto getAnonymousMemoir(Long user_id) {
+    public List<MemoirAnonymousResponseDto> getAnonymousMemoir(Long user_id) {
         List<Long> memoirIds = memoirRepository.findAllIdsByUsersIdNot(user_id);
         if (memoirIds.isEmpty()) {
             throw new RuntimeException("No memoirs available for anonymous viewing.");
         }
 
         Random random = new Random();
-        Long randomMemoirId = memoirIds.get(random.nextInt(memoirIds.size()));
-        Memoir memoir = memoirRepository.findById(randomMemoirId)
-                .orElseThrow(() -> new RuntimeException("Memoir not found with id: " + randomMemoirId));
+        List<MemoirAnonymousResponseDto> memoirDtos = new ArrayList<>();
+        while (memoirDtos.size() < 5) {
+            Long randomMemoirId = memoirIds.get(random.nextInt(memoirIds.size()));
+            memoirIds.remove(randomMemoirId); // avoid duplicate selection
 
-        memoir.getCommentList().forEach(comment -> Hibernate.initialize(comment.getAlarmList()));
-        int commentCount = memoir.getCommentList() != null ? memoir.getCommentList().size() : 0;
-        int likeCount = memoirLikeRepository.countByMemoirId(randomMemoirId); // 좋아요 개수 계산
+            Memoir memoir = memoirRepository.findById(randomMemoirId)
+                    .orElseThrow(() -> new RuntimeException("Memoir not found with id: " + randomMemoirId));
 
+            memoir.getCommentList().forEach(comment -> Hibernate.initialize(comment.getAlarmList()));
+            int commentCount = memoir.getCommentList() != null ? memoir.getCommentList().size() : 0;
+            int likeCount = memoirLikeRepository.countByMemoirId(randomMemoirId); // 좋아요 개수 계산
 
-        return MemoirAnonymousResponseDto.builder()
-                .user_id(memoir.getUsers().getId())
-                .title(memoir.getTitle())
-                .place(memoir.getPlace())
-                .memoirKeep(memoir.getMemoirKeep())
-                .memoirProblem(memoir.getMemoirProblem())
-                .memoirTry(memoir.getMemoirTry())
-                .likeCount(likeCount)
-                .commentCount(commentCount)
-                .commentList(memoir.getCommentList())
-                .createdAt(LocalDateTime.parse(memoir.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))))
-                .build();
+            memoirDtos.add(
+                    MemoirAnonymousResponseDto.builder()
+                            .user_id(memoir.getUsers().getId())
+                            .title(memoir.getTitle())
+                            .place(memoir.getPlace())
+                            .memoirKeep(memoir.getMemoirKeep())
+                            .memoirProblem(memoir.getMemoirProblem())
+                            .memoirTry(memoir.getMemoirTry())
+                            .likeCount(likeCount)
+                            .commentCount(commentCount)
+                            .commentList(memoir.getCommentList())
+                            .createdAt(LocalDateTime.parse(memoir.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))))
+                            .build()
+            );
+        }
+        return memoirDtos;
     }
 
 
