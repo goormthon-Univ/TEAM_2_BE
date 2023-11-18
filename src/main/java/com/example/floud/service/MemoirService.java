@@ -48,7 +48,10 @@ public class MemoirService {
         LocalDate memoirDate = requestDto.getCreatedAt().toLocalDate();
 
         // 해당 사용자가 해당 날짜에 이미 회고록을 작성했는지 확인
-        boolean alreadyExists = memoirRepository.existsByUsersAndCreatedDate(users, memoirDate);
+        LocalDateTime startOfDay = memoirDate.atStartOfDay();
+        LocalDateTime endOfDay = memoirDate.plusDays(1).atStartOfDay();
+
+        boolean alreadyExists = memoirRepository.existsByUsersAndCreatedAtBetween(users, startOfDay, endOfDay);
 
         if (alreadyExists) {
             throw new CustomException("이미 오늘자 회고를 작성했습니다.", HttpStatus.BAD_REQUEST);
@@ -64,7 +67,8 @@ public class MemoirService {
         if (backColor==4) backColor=1;
         else backColor++;
 
-        users.updateColor(backColor); users.updateContinueDate(users.getContinueDate()+1);
+        users.updateColor(backColor);
+        users.updateContinueDate(users.getContinueDate()+1);
 
         return responseDto;
     }

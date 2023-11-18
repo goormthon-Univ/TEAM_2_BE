@@ -14,8 +14,8 @@ import java.util.Optional;
 public interface MemoirRepository extends JpaRepository<Memoir, Long> {
 
     List<Memoir> findByUsersIdAndCreatedAtBetween(Long userId, LocalDateTime startDate, LocalDateTime endDate);
-    Optional<Memoir> findByUsers_IdAndCreatedAtBetween(Long userId, LocalDateTime startDateTime, LocalDateTime endDateTime);
 
     @Query("SELECT m.id FROM Memoir m WHERE m.users.id <> :userId")
     List<Long> findAllIdsByUsersIdNot(@Param("userId") Long user_id);
+    boolean existsByUsersAndCreatedAtBetween(Users users, LocalDateTime startDate, LocalDateTime endDate);
 }
