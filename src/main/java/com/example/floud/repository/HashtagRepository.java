@@ -12,4 +12,5 @@ public interface HashtagRepository extends JpaRepository<Hashtag, Long> {
     boolean existsByMemoir_UsersAndTagContentAndMemoir_CreatedAtIsAfter(Users users, String tagContent, LocalDateTime date);
     Hashtag findByMemoir_UsersAndTagContent(Users users, String tagContent);
     List<Hashtag> findByMemoir(Memoir memoir);
+    List<Hashtag> findByMemoirId(Long memoir_id);
 }

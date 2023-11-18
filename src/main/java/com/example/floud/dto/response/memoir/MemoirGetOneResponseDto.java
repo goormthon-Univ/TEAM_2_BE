@@ -25,5 +25,8 @@ public class MemoirGetOneResponseDto {
     private int likeCount;
     private List<MemoirLike> memoirLikeList;
     private LocalDateTime createdAt;
+    private String hashtag1;
+    private String hashtag2;
+    private String hashtag3;
 
 }

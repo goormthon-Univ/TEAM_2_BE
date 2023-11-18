@@ -7,8 +7,10 @@ import com.example.floud.dto.response.memoir.MemoirCreateResponseDto;
 
 import com.example.floud.dto.response.memoir.MemoirGetOneResponseDto;
 import com.example.floud.dto.response.memoir.MemoirUpdateResponseDto;
+import com.example.floud.entity.Hashtag;
 import com.example.floud.entity.Memoir;
 import com.example.floud.entity.Users;
+import com.example.floud.repository.HashtagRepository;
 import com.example.floud.repository.MemoirLikeRepository;
 import com.example.floud.repository.MemoirRepository;
 import com.example.floud.repository.UserRepository;
@@ -30,6 +32,7 @@ public class MemoirService {
     private final MemoirRepository memoirRepository;
     private final MemoirLikeRepository memoirLikeRepository;
     private final UserRepository userRepository;
+    private final HashtagRepository hashtagRepository;
 
     @Transactional
     public MemoirCreateResponseDto createMemoir(MemoirCreateRequestDto requestDto) {
@@ -43,7 +46,6 @@ public class MemoirService {
         MemoirCreateResponseDto responseDto = MemoirCreateResponseDto.builder()
                 .memoir_id(newMemoir.getId())
                 .build();
-
 
         int backColor = users.getBackColor();
         if (backColor==4) backColor=1;
@@ -63,6 +65,12 @@ public class MemoirService {
         int commentCount = oneMemoir.getCommentList() != null ? oneMemoir.getCommentList().size() : 0;
         int likeCount = memoirLikeRepository.countByMemoirId(memoir_id); // 좋아요 개수 계산
 
+        List<Hashtag> Hashtags = hashtagRepository.findByMemoirId(memoir_id);
+        String hashtag1 = Hashtags.size() > 0 ? Hashtags.get(0).getTagContent() : "";
+        String hashtag2 = Hashtags.size() > 1 ? Hashtags.get(1).getTagContent() : "";
+        String hashtag3 = Hashtags.size() > 2 ? Hashtags.get(2).getTagContent() : "";
+
+
         return MemoirGetOneResponseDto.builder()
                 .user_id(oneMemoir.getUsers().getId())
                 .title(oneMemoir.getTitle())
@@ -74,6 +82,9 @@ public class MemoirService {
                 .commentCount(commentCount)
                 .commentList(oneMemoir.getCommentList())
                 .createdAt(LocalDateTime.parse(oneMemoir.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))))
+                .hashtag1(hashtag1)
+                .hashtag2(hashtag2)
+                .hashtag3(hashtag3)
                 .build();
     }
 
