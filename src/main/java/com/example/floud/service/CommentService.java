@@ -90,9 +90,7 @@ public class CommentService {
 
         //사용자가 쓴 댓글 찾기
         List<Comment> comments = commentRepository.findByUsers_Id(user_id);
-        List<MyCommentListResponseDto> responseDtos = null;
-        if (!comments.isEmpty()) {
-            responseDtos = comments.stream()
+        List<MyCommentListResponseDto> responseDtos = comments.stream()
                     .filter(comment -> {
                         LocalDateTime memoirCreatedAt = comment.getMemoir().getCreatedAt();
                         return memoirCreatedAt.isAfter(startDate) && memoirCreatedAt.isBefore(endDate);
@@ -108,7 +106,6 @@ public class CommentService {
                                 .build();
                     })
                     .collect(Collectors.toList());
-        }
 
         return responseDtos;
 
