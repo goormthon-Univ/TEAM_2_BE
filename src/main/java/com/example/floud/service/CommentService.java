@@ -50,7 +50,7 @@ public class CommentService {
                 .build();
 
         //알람생성
-        alarmService.saveAlarmComment(users,memoir,newComment);
+        alarmService.saveAlarmComment(memoir,newComment);
 
         return responseDto;
     }

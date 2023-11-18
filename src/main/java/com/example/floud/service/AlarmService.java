@@ -19,13 +19,17 @@ public class AlarmService {
     private final AlarmRepository alarmRepository;
     private final UserRepository userRepository;
     @Transactional
-    public void saveAlarmComment(Users users, Memoir memoir, Comment comment){
+    public void saveAlarmComment(Memoir memoir, Comment comment){
+        Users users = userRepository.findById(memoir.getUsers().getId())
+                .orElseThrow(()-> new IllegalArgumentException("회고록을 작성한 유저가 없습니다." + memoir.getUsers().getId()));
         AlarmSaveRequestDto requestDto = new AlarmSaveRequestDto();
         alarmRepository.save(requestDto.toEntityComment(users,memoir,comment));
     }
 
     @Transactional
-    public void saveAlarmLike(Users users, Memoir memoir, MemoirLike memoirLike){
+    public void saveAlarmLike(Memoir memoir, MemoirLike memoirLike){
+        Users users = userRepository.findById(memoir.getUsers().getId())
+                .orElseThrow(()-> new IllegalArgumentException("회고록을 작성한 유저가 없습니다." + memoir.getUsers().getId()));
         AlarmSaveRequestDto requestDto = new AlarmSaveRequestDto();
         alarmRepository.save(requestDto.toEntityLike(users,memoir,memoirLike));
     }
@@ -43,12 +47,14 @@ public class AlarmService {
             alarmDto.setAlarm_id(alarm.getAlarm_id());
 
             if (alarm.getComment() != null) {
+                alarmDto.setType("comment");
                 alarmDto.setComment_id(alarm.getComment().getComment_id());
                 alarmDto.setContent(alarm.getComment().getContent());
                 alarmDto.setAlarmTime(alarm.getComment().getCreatedAt());
             }
 
             if (alarm.getMemoirLike() != null) {
+                alarmDto.setType("like");
                 alarmDto.setMemoir_like_id(alarm.getMemoirLike().getMemoir_like_id());
                 alarmDto.setMemoir_id(alarm.getMemoirLike().getMemoir().getId());
                 alarmDto.setTitle(alarm.getMemoirLike().getMemoir().getTitle());

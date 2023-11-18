@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 public class AlarmListResponseDto {
+    private String type;
     private Long alarm_id;
     private Long memoir_id;
     private String title;
