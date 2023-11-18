@@ -1,5 +1,6 @@
 package com.example.floud.service;
 
+import com.example.floud.dto.request.hashtag.HashtagDto;
 import com.example.floud.dto.request.user.LoginRequestDto;
 import com.example.floud.dto.request.user.MainRequestDto;
 import com.example.floud.dto.request.user.SignupRequestDto;
@@ -86,7 +87,7 @@ public class UserService {
         if(yesterdayMemoir==null) user.updateContinueDate(0);
 
         //상위 3개 해시태그
-        Map<String, Long> hashtags = findTopThreeHashtags(user_id,nowTime);
+        List<HashtagDto> hashtags = findTopThreeHashtags(user_id,nowTime);
 
         return  MainResponseDto.builder()
                 .user_id(user_id)
@@ -98,7 +99,7 @@ public class UserService {
                 .build();
     }
 
-    public Map<String, Long> findTopThreeHashtags(Long userId, LocalDateTime accessTime) {
+    public List<HashtagDto> findTopThreeHashtags(Long userId, LocalDateTime accessTime) {
         LocalDateTime firstDayOfMonth = accessTime.withDayOfMonth(1);
         List<Memoir> memoirs = memoirRepository.findByUserIdAndCreatedAtBetween(userId, firstDayOfMonth, accessTime);
 
@@ -111,9 +112,13 @@ public class UserService {
         hashtags.sort((o1, o2) -> o2.getTagNum().compareTo(o1.getTagNum()));
 
         // top3
-        Map<String, Long> topThreeHashtags = hashtags.stream()
+        List<HashtagDto> topThreeHashtags = hashtags.stream()
                 .limit(3)
-                .collect(Collectors.toMap(Hashtag::getTagContent, Hashtag::getTagNum));
+                .map(hashtag -> HashtagDto.builder()
+                        .tagContent(hashtag.getTagContent())
+                        .tagNum(hashtag.getTagNum())
+                        .build())
+                .collect(Collectors.toList());
         return topThreeHashtags;
     }
 

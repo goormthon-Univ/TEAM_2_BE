@@ -1,5 +1,6 @@
 package com.example.floud.dto.response.user;
 
+import com.example.floud.dto.request.hashtag.HashtagDto;
 import com.example.floud.entity.Hashtag;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,5 +18,5 @@ public class MainResponseDto {
     private String title;
     private int backColor;
     private int continueDate;
-    private Map<String, Long> hashtagList;
+    private List<HashtagDto> hashtagList;
 }
