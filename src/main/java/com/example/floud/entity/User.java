@@ -68,7 +68,4 @@ public class User {
     public void updateContinueDate(int continueDate){
         this.continueDate = continueDate;
     }
-
-
-
 }
