@@ -73,10 +73,6 @@ public class UserService {
         LocalDateTime nowTime = requestDto.getNowTime();
         LocalDateTime startOfDay = nowTime.withHour(0).withMinute(0).withSecond(0).withNano(0);
         LocalDateTime endOfDay = nowTime.withHour(23).withMinute(59).withSecond(59).withNano(999999999);
-
-        System.out.println("오늘 회고 작성 조회 시작시간" + startOfDay.toString());
-        System.out.println("오늘 회고 작성 조회 끝시간" + endOfDay.toString());
-
         //오늘 회고 여부
         List<Memoir> memoir = memoirRepository.findByUsersIdAndCreatedAtBetween(user_id, startOfDay, endOfDay);
         Long memoir_id; String title;
