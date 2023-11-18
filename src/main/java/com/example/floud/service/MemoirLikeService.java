@@ -44,7 +44,7 @@ public class MemoirLikeService {
         alarmService.saveAlarmLike(memoir,newLike);
 
         return LikeSaveResponseDto.builder()
-                .memori_like_id(newLike.getMemoir_like_id())
+                .memoir_like_id(newLike.getMemoir_like_id())
                 .build();
     }
 
