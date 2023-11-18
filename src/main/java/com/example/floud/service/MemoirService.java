@@ -10,15 +10,18 @@ import com.example.floud.dto.response.memoir.MemoirUpdateResponseDto;
 import com.example.floud.entity.Hashtag;
 import com.example.floud.entity.Memoir;
 import com.example.floud.entity.Users;
+import com.example.floud.exception.CustomException;
 import com.example.floud.repository.HashtagRepository;
 import com.example.floud.repository.MemoirLikeRepository;
 import com.example.floud.repository.MemoirRepository;
 import com.example.floud.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Hibernate;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -40,6 +43,16 @@ public class MemoirService {
 
         Users users = userRepository.findById(user_id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + user_id));
+
+        // Dto에서 받은 LocalDateTime을 LocalDate로 변환
+        LocalDate memoirDate = requestDto.getCreatedAt().toLocalDate();
+
+        // 해당 사용자가 해당 날짜에 이미 회고록을 작성했는지 확인
+        boolean alreadyExists = memoirRepository.existsByUsersAndCreatedDate(users, memoirDate);
+
+        if (alreadyExists) {
+            throw new CustomException("이미 오늘자 회고를 작성했습니다.", HttpStatus.BAD_REQUEST);
+        }
 
         Memoir newMemoir = memoirRepository.save(requestDto.toMemoir(users));
 

@@ -1,6 +1,7 @@
 package com.example.floud.repository;
 
 import com.example.floud.entity.Memoir;
+import com.example.floud.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
