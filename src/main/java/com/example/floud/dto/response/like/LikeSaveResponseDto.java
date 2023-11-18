@@ -6,5 +6,5 @@ import lombok.Getter;
 @Getter
 @Builder
 public class LikeSaveResponseDto {
-    private Long memori_like_id;
+    private Long memoir_like_id;
 }
