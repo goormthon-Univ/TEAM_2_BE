@@ -10,10 +10,12 @@ import com.example.floud.dto.response.user.SignupResponseDto;
 import com.example.floud.entity.Hashtag;
 import com.example.floud.entity.Memoir;
 import com.example.floud.entity.User;
+import com.example.floud.exception.CustomException;
 import com.example.floud.repository.HashtagRepository;
 import com.example.floud.repository.MemoirRepository;
 import com.example.floud.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +36,11 @@ public class UserService {
 
     @Transactional
     public SignupResponseDto saveUser(SignupRequestDto requestDto){
+        if (userRepository.findByEmail(requestDto.getEmail()).isPresent()) {
+            throw new CustomException("이미 등록된 이메일입니다.", HttpStatus.BAD_REQUEST);
+        }
         User newUser = userRepository.save(requestDto.toUser());
+
         System.out.println(newUser.getId());
         return SignupResponseDto.builder()
                 .user_id(newUser.getId())
