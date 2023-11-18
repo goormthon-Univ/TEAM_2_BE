@@ -20,6 +20,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
 
@@ -72,19 +74,20 @@ public class UserService {
         LocalDateTime startOfDay = nowTime.withHour(0).withMinute(0).withSecond(0).withNano(0);
         LocalDateTime endOfDay = nowTime.withHour(23).withMinute(59).withSecond(59).withNano(999999999);
 
+        System.out.println("오늘 회고 작성 조회 시작시간" + startOfDay.toString());
+        System.out.println("오늘 회고 작성 조회 끝시간" + endOfDay.toString());
+
         //오늘 회고 여부
-        Memoir memoir = memoirRepository.findByUsers_IdAndCreatedAtBetween(user_id, startOfDay, endOfDay)
-                .orElse(null);
+        List<Memoir> memoir = memoirRepository.findByUsersIdAndCreatedAtBetween(user_id, startOfDay, endOfDay);
         Long memoir_id; String title;
-        if (memoir == null) { memoir_id = 0L; title = ""; }
-        else { memoir_id = memoir.getId(); title = memoir.getTitle();}
+        if (memoir.isEmpty()) { memoir = null;  memoir_id = 0L; title = "";}
+        else { memoir_id = memoir.get(0).getId(); title = memoir.get(0).getTitle();}
 
         //어제 회고 여부
         LocalDateTime startOfYesterday = nowTime.minusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
         LocalDateTime endOfYesterday = nowTime.minusDays(1).withHour(23).withMinute(59).withSecond(59).withNano(999999999);
-        Memoir yesterdayMemoir = memoirRepository.findByUsers_IdAndCreatedAtBetween(user_id, startOfYesterday, endOfYesterday)
-                .orElse(null);
-        if(yesterdayMemoir==null) users.updateContinueDate(0);
+        List<Memoir> yesterdayMemoir = memoirRepository.findByUsersIdAndCreatedAtBetween(user_id, startOfYesterday, endOfYesterday);
+        if(yesterdayMemoir.isEmpty()) users.updateContinueDate(0);
 
         //상위 3개 해시태그
         List<HashtagDto> hashtags = findTopThreeHashtags(user_id,nowTime);
@@ -100,8 +103,15 @@ public class UserService {
     }
 
     public List<HashtagDto> findTopThreeHashtags(Long userId, LocalDateTime accessTime) {
-        LocalDateTime firstDayOfMonth = accessTime.withDayOfMonth(1);
-        List<Memoir> memoirs = memoirRepository.findByUsersIdAndCreatedAtBetween(userId, firstDayOfMonth, accessTime);
+
+        LocalDateTime firstDayOfMonth = accessTime.withDayOfMonth(1).with(LocalTime.MIN);
+        LocalDateTime lastDayOfMonth = accessTime.with(TemporalAdjusters.lastDayOfMonth()).with(LocalTime.MAX);
+
+        System.out.println("한달치 태그 계산 시작시간" + firstDayOfMonth.toString());
+        System.out.println("한달치 태그 계산 끝시간" + lastDayOfMonth.toString());
+
+        //사용자의 한달치 회고들
+        List<Memoir> memoirs = memoirRepository.findByUsersIdAndCreatedAtBetween(userId, firstDayOfMonth, lastDayOfMonth);
 
         // 찾은 회고록에 연결된 해시태그 찾기
         List<Hashtag> hashtags = new ArrayList<>();
