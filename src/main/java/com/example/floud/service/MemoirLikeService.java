@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,18 +65,17 @@ public class MemoirLikeService {
 
         LocalDate like_date =  requestDto.getLikeDate().toLocalDate();
         LocalDateTime startDate = like_date.withDayOfMonth(1).atStartOfDay();
-        LocalDateTime endDate = like_date.withDayOfMonth(like_date.lengthOfMonth()).atTime(23, 59, 59);
+        LocalDateTime endDate = like_date.withDayOfMonth(like_date.lengthOfMonth()).atTime(LocalTime.MAX);
 
-      // Memoir 객체를 가져오되, User가 좋아요를 누른 것
-        List<Memoir> memoirs = memoirRepository.findByUsersIdAndCreatedAtBetween(user_id, startDate, endDate);
-        List<LikeMemoirListResponseDto> responseDtos = memoirs.stream()
-                .filter(memoir -> memoir.getMemoirLikeList().stream().anyMatch(like -> like.getUsers().getId().equals(user_id))) // User가 좋아요를 누른 Memoir만 필터링
-                .map(memoir -> {
+        //MemoirLike 객체를 가져오되, User가 좋아요를 누른 것
+        List<MemoirLike> memoirLikes = memoirLikeRepository.findByUserIdAndMemoirCreatedAtBetween(user_id, startDate, endDate);
+        List<LikeMemoirListResponseDto> responseDtos = memoirLikes.stream()
+                .map(memoirLike -> {
                     return LikeMemoirListResponseDto.builder()
-                            .memoir_id(memoir.getId())
-                            .title(memoir.getTitle())
-                            .createdAt(memoir.getCreatedAt())
-                            .memoir_like_id(memoir.getMemoirLikeList().stream().filter(like -> like.getUsers().getId().equals(user_id)).findFirst().get().getMemoir_like_id()) // User가 좋아요를 누른 MemoirLike의 ID
+                            .memoir_id(memoirLike.getMemoir().getId())
+                            .title(memoirLike.getMemoir().getTitle())
+                            .createdAt(memoirLike.getMemoir().getCreatedAt())
+                            .memoir_like_id(memoirLike.getMemoir_like_id())
                             .build();
                 })
                 .collect(Collectors.toList());
