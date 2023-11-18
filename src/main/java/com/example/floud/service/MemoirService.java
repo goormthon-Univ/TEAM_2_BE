@@ -111,6 +111,7 @@ public class MemoirService {
             memoirDtos.add(
                     MemoirAnonymousResponseDto.builder()
                             .user_id(memoir.getUsers().getId())
+                            .memoir_id(memoir.getId())
                             .title(memoir.getTitle())
                             .place(memoir.getPlace())
                             .memoirKeep(memoir.getMemoirKeep())

@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class MemoirAnonymousResponseDto {
     private Long user_id;
+    private Long memoir_id;
     private String title;
     private String place;
     private String memoirKeep;
