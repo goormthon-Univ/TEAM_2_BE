@@ -58,6 +58,7 @@ public class UserService {
 
         return LoginResponseDto.builder()
                 .user_id(user_id)
+                .username(users.getUsername())
                 .build();
     }
 

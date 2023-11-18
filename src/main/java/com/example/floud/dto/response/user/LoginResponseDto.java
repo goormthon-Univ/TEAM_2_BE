@@ -9,4 +9,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public class LoginResponseDto {
     private Long user_id;
+    private String username;
 }
