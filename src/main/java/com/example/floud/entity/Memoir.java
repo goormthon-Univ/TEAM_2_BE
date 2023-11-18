@@ -64,16 +64,11 @@ public class Memoir {
     @OneToMany(mappedBy = "memoir", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Hashtag> hashtagList = new ArrayList<>();
 
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-    }
-
     @Builder
-    public Memoir(User user, String title, String place, String memoirKeep, String memoirProblem, String memoirTry) {
+    public Memoir(User user, String title, LocalDateTime createdAt, String place, String memoirKeep, String memoirProblem, String memoirTry) {
         this.user = user;
         this.title = title;
+        this.createdAt = createdAt;
         this.place = place;
         this.memoirKeep = memoirKeep;
         this.memoirProblem = memoirProblem;

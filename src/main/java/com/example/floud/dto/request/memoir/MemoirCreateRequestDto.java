@@ -6,6 +6,8 @@ import com.example.floud.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @Getter
@@ -14,6 +16,7 @@ public class MemoirCreateRequestDto {
     private Long user_id;
     private String title;
     private String place;
+    private LocalDateTime createdAt;
     private String memoirKeep;
     private String memoirProblem;
     private String memoirTry;
@@ -26,6 +29,7 @@ public class MemoirCreateRequestDto {
         return Memoir.builder()
                 .title(title)
                 .place(place)
+                .createdAt(createdAt)
                 .memoirKeep(memoirKeep)
                 .memoirProblem(memoirProblem)
                 .memoirTry(memoirTry)
