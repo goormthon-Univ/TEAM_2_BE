@@ -27,5 +27,5 @@
 
 ## ERD
 
-<img width="939" alt="image" src="https://github.com/goormthon-Univ/TEAM_2_BE/assets/90603399/01b7612f-ca22-482e-9ee8-07b3c25cafe3">
+<img src="https://github.com/goormthon-Univ/TEAM_2_BE/assets/90603399/01b7612f-ca22-482e-9ee8-07b3c25cafe3" width="939" alt="image" >
 
