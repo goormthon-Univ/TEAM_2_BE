@@ -23,3 +23,9 @@
 | `chore`   | 자잘한 수정 사항 반영                     |
 | `docs`    | 문서를 수정한 경우                       |
 | `test`    | 테스트 추가                           |
+
+
+## ERD
+
+<img width="939" alt="image" src="https://github.com/goormthon-Univ/TEAM_2_BE/assets/90603399/01b7612f-ca22-482e-9ee8-07b3c25cafe3">
+
